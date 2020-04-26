@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+</head>
+<body>
+    <h1>This is our home page where a query is collected</h1>
+    {% for region in vegan_map %}
+        <p>There is {{region.veggie_number}} vegitarians in {{region.name}} ({{region.postcode}})</p>
+    {% endfor %}
+    <p>the end</p> 
+    <div>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset>
+                {{form.postcode.label() }}
+                {{form.postcode() }}
+            </fieldset>
+        </form>
+    </div>
+</body>
+</html>
