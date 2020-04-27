@@ -7,7 +7,7 @@ from query import QueryForm
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'NieYanIsTheBest'
 
-# some dummy data
+# some dummy data, will be replaced when couchDB is deployed
 vegan_map = [
     {
         'name' : 'Carlton',
@@ -20,7 +20,26 @@ vegan_map = [
         'postcode' : '3051',
         'veggie_restaurant' : [],
         'vegan_number' : 100
+    },
+    {
+        'name' : 'Ardeer',
+        'postcode' : '3022',
+        'veggie_restaurant' : [],
+        'vegan_number' : 30
+    },
+    {
+        'name' : 'Footscray and Seddon',
+        'postcode' : '3011',
+        'veggie_restaurant' : [],
+        'vegan_number' : 50
+    },
+    {
+        'name' : 'Williamstown',
+        'postcode' : '3016',
+        'veggie_restaurant' : [],
+        'vegan_number' : 75
     }
+    
 ]
 
 
@@ -33,3 +52,10 @@ def home():
         return redirect(url_for('home'))
     return render_template('home.html', vegan_map = vegan_map, 
     form = form)
+
+@app.route('/chart')
+def chart():
+    labels = [r['name'] for r in vegan_map]
+    values = [r['vegan_number'] for r in vegan_map]  
+    return render_template('chart.html', labels=labels
+    , values=values)
