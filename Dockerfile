@@ -1,11 +1,15 @@
-FROM python:alpine3.7
+FROM alpine:latest
 
 RUN apk add --no-cache python3-dev \
     && pip3 install --upgrade pip
-    
-COPY ./requirements.txt /app/requirements.txt
+
 WORKDIR /app
-RUN pip install -r requirements.txt
-COPY . /app
-ENTRYPOINT [ "python" ]
-CMD [ "web_app.py" ]
+
+COPY ./web_app /app
+
+RUN pip3 install -r requirements.txt
+
+EXPOSE 80
+
+ENTRYPOINT [ "python3" ]
+CMD ["web_app.py"]
