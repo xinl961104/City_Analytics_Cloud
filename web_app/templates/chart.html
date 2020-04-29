@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+  </head>
+    <body>
+        <div class="ct-chart ct-perfect-fourth"></div>
+        <script>
+            var lbs = {{ labels|tojson }};
+            var vals = {{ values|tojson }};
+            var data = {
+                labels : lbs,
+                series : [
+                    vals
+                ]
+            };
+            var options = {
+                width : 800,
+                height : 600
+            }
+            var my_chart = new Chartist.Line('.ct-chart', data, options);
+
+        </script>
+    </body>
+</html>
