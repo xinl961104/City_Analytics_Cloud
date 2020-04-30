@@ -1,34 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9ac0bcfe-5079-4302-b2bb-e8ff50729680" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Aurin_DataColletor.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../requirements.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/2006-Index of Relative Socio-economic Disadvantage score.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/2006-Index of Relative Socio-economic Disadvantage score_index_explan.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/2011-Index of Relative Socio-economic Disadvantage score.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/2011-Index of Relative Socio-economic Disadvantage score_var_explan.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/2015-Index of Relative Socio-economic Disadvantage score.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/2015-Index of Relative Socio-economic Disadvantage score_var_explan.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/age_group_2010.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/age_group_2010_var_explan.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/age_group_2016.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/age_group_2016_var_explan.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/age_group_2021.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/age_group_2021_var_explan.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/insufficient_fruit&amp;veg2011.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/insufficient_fruit&amp;veg2011_variable_explanation.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/insufficient_fruit&amp;veg2015.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/insufficient_fruit+veg2015_var_explan.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/population_2011-2019.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/population_2011-2019_variable_explan.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/population_2011_2016_2020_2021.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/population_2011_2016_2020_2021_var_explan.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_app.py" afterDir="false" />
-    </list>
+    <list default="true" id="9ac0bcfe-5079-4302-b2bb-e8ff50729680" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +72,7 @@
       <option name="presentableId" value="Default" />
       <updated>1588164693019</updated>
       <workItem from="1588164694350" duration="2574000" />
-      <workItem from="1588169259248" duration="2748000" />
+      <workItem from="1588169259248" duration="2983000" />
     </task>
     <servers />
   </component>
