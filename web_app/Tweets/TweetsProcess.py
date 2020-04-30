@@ -13,10 +13,8 @@ class StdOutListener(StreamListener):
     """
     This is a basic listener class that just prints received tweets to stdout.
     """
-
     def on_data(self, data):
         try:
-            print(data)
             with open("result_tweets.json", 'a') as tf:
                 tf.write(data)
             return True
@@ -34,7 +32,7 @@ class StdOutListener(StreamListener):
             return False
 
 
-hash_tag_list = ["vegan", "vegetarian"]
+hash_tag_list = ["vegan", "vegetarian", "veggie"]
 listener = StdOutListener()
 auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
