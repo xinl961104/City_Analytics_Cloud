@@ -32,7 +32,7 @@ class StdOutListener(StreamListener):
             return False
 
 
-hash_tag_list = ["vegan", "vegetarian"]
+hash_tag_list = ["vegan", "vegetarian", "veggie"]
 listener = StdOutListener()
 auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)

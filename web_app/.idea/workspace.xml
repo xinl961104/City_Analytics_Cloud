@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="9ac0bcfe-5079-4302-b2bb-e8ff50729680" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/credentials.py" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration/credentials.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration/twitter.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration/twitter.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Tweets/TweetsProcess.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tweets/TweetsProcess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_app.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
