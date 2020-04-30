@@ -13,10 +13,8 @@ class StdOutListener(StreamListener):
     """
     This is a basic listener class that just prints received tweets to stdout.
     """
-
     def on_data(self, data):
         try:
-            print(data)
             with open("result_tweets.json", 'a') as tf:
                 tf.write(data)
             return True
