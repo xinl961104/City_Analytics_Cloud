@@ -3,7 +3,7 @@
 
 
 from flask import Flask, render_template, flash, redirect, url_for, g
-from flaskext.couchdb import CouchDBManager
+from flaskext.couchdb import CouchDBManager, ViewDefinition
 from query import QueryForm
 import simplejson
 
@@ -57,19 +57,13 @@ def home():
     form = QueryForm()
     if form.validate_on_submit():
         flash(f'Query submitted!', 'success')
-
-        return redirect(url_for('home'))
+        print(type(form))
+        document = [test_view[form.postcode.data]]
+        flash(list(test_view['1255808566730121216'])[0])
+        ##return render_template('home.html', vegan_map=document,
+                               ##form=form)
     return render_template('home.html', vegan_map=vegan_map,
                            form=form)
-
-
-    print(type(form))
-    document = [g.couch[form.postcode.data]]
-    return render_template('home.html', vegan_map=document,
-                    form=form)
-    document = [g.couch["002"]]
-    return render_template('home.html', vegan_map=document, form=form)
-
 
 #@app.route("/test")
 #def
@@ -84,17 +78,20 @@ def chart():
                            , values=values)
 
 
-
-if __name__ == "__main__":
-    app.run(debug=False)
-
-if __name__ == '__main__':
-    app.config.update(
+app.config.update(
         DEBUG=True,
         COUCHDB_SERVER='http://terry:1234567@localhost:5984/',
-        COUCHDB_DATABASE='demo'
+        COUCHDB_DATABASE='haha'
     )
-    manager = CouchDBManager()
-    manager.setup(app)
+manager = CouchDBManager()
+test_view = ViewDefinition('haha', 'test', '''\
+    function (doc){
+        if (doc.id_str && doc.text){
+            emit(doc.id_str, doc.text)
+        };
+    }''')
+manager.add_viewdef(test_view)
+manager.setup(app)
+if __name__ == '__main__':
     app.run(debug = True)
 
