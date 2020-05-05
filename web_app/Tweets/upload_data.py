@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 #CouchDB authentication
-COUCHDB_SERVER='http://terry:1234567@localhost:5984/'
+COUCHDB_SERVER='http://admin:password@172.26.132.199:5984/'
 DBNAME = 'haha'
 couch = couchdb.Server(COUCHDB_SERVER)
 db = couch[DBNAME]
