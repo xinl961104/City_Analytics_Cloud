@@ -3,14 +3,15 @@ availability_zone: melbourne-qh2-uom
 
 # Volume
 volumes:
-  - vol_name: vegan-vol-1-1
+  - vol_name: vegan-vol-1
     vol_size: 10
-  - vol_name: vegan-vol-1-2
+  - vol_name: couchDB-master
     vol_size: 10
-  - vol_name: vegan-vol-2-1
+  - vol_name: couchDB-slave1
     vol_size: 10
-  - vol_name: vegan-vol-2-2
+  - vol_name: couchDB-slave2
     vol_size: 10
+
 
 # Security group
 security_groups:
@@ -29,10 +30,14 @@ security_groups:
 
 # Instance
 instances:
-  - name: vegan-1
-    volumes: ['vegan-vol-1-1', 'vegan-vol-1-2']
-  - name: vegan-2
-    volumes: ['vegan-vol-2-1', 'vegan-vol-2-2']
+  - name: vegan
+    volumes: ['vegan-vol-1']
+  - name: couchDB-master
+    volumes: ['couchDB-master']
+  - name: couchDB-slave1
+    volumes: ['couchDB-slave1']
+  - name: couchDB-slave2
+    volumes: ['couchDB-slave2']
 
 instance_image: 45225edb-66d8-4fd0-bf41-132a31a18166
 instance_key_name: id_Cassie
