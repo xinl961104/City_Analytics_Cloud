@@ -1,0 +1,23 @@
+- name: Pull couchdb image
+  raw: sudo docker pull couchdb
+
+- name: Run couchdb image
+  raw: sudo docker run -d -p 5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=pass couchdb:latest
+
+- #name: Stop running couchdb
+  #service:
+  #  name: "couchdb"
+  #  state: stopped
+
+- #name: Create new couchdb container
+  #docker_container:
+  #  name: "couchdb"
+  #  image: "couchdb"
+  #  command: sudo docker run -d -p 5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=pass couchdb:latest
+  #  state: present
+    #restart: yes
+    #exposed_ports:
+    #  - 5984
+    #env:
+    #  COUCHDB_USER: user
+    #  COUCHDB_PASSWORD: pass
