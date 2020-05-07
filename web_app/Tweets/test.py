@@ -1,17 +1,13 @@
-import json
-import nltk
-from cloudant import client, cloudant
 from cloudant.client import CouchDB
 from cloudant.design_document import DesignDocument
-nltk.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 
 #metadata of couchdb server
-USERNAME = 'admin'
-PASSWORD = 'password'
-URL = 'http://172.26.132.199:5984'
-DBNAME = 'historic_data'
+USERNAME = 'terry'
+PASSWORD = '1234567'
+URL = 'http://localhost:5984'
+DBNAME = 'haha'
 DBNAME2 = 'processed_data'
 
 #initial connection with couchdb server
@@ -20,7 +16,7 @@ my_database = client[DBNAME]
 my_database2 = client.create_database(DBNAME2)
 
 map_fun = '''function(doc) {
-                emit(doc.doc.user.location, doc.doc.text);
+                emit(doc.user.location, doc.text);
         }'''
 
 ddoc_id = 'ddoc001'
@@ -32,16 +28,13 @@ view1 = my_database.get_design_document(ddoc_id).get_view(view_id)
 
 #initialize the sentiment analysis classifier
 sid = SentimentIntensityAnalyzer()
-with view1.custom_result(group = True) as rslt:
-    to_upload = []
-    for elem in rslt:
-        compound_value =  sid.polarity_scores(elem['doc']['text'])['compound']
-        elem['compound'] = compound_value
-        to_upload.append(elem)
 
-
-
-
-
-
-
+to_upload = []
+for elem in view1.result:
+    print(elem)
+    compound_value =  sid.polarity_scores(elem['value'])['compound']
+    elem['compound'] = compound_value
+    to_upload.append(elem)
+    if (len(to_upload) == 10) :
+        my_database2.bulk_docs(to_upload)
+        to_upload = []

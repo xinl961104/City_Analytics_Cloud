@@ -4,24 +4,25 @@ from cloudant import client, cloudant
 from cloudant.client import CouchDB
 from cloudant.design_document import DesignDocument
 
-#metadata of couchdb server
+#metadata of couchdb serverreduce_fun = '_count'
 USERNAME = 'terry'
 PASSWORD = '1234567'
 URL = 'http://127.0.0.1:5984'
-DBNAME = 'haha'
+DBNAME = 'processed_data'
 
 #initial connection with couchdb server
 client = CouchDB(USERNAME, PASSWORD, url=URL, connect=True)
 
 #maping function and reduce function-> can be modified
 map_fun = '''function(doc) {
-                emit(doc.user.location, 1);
+                emit(doc.key, doc.compound);
         }'''
-reduce_fun = '_count'
+
+#reduce_fun = '_count'
+reduce_fun = '_stats'
 
 #specify which database you want to access, returns all the document within the database
 my_database = client[DBNAME]
-
 
 #creating a example using the mapping function and reduce function, adding it to the database
 viewName = 'mapreduce'
@@ -34,10 +35,10 @@ ddoc_id = 'ddoc001'
 view_id = 'mapreduce'
 my_database2 = client.get(DBNAME, remote = True)
 view1 = my_database2.get_design_document(ddoc_id).get_view(view_id)
+#with view1.custom_result(group = True) as rslt:
 with view1.custom_result(group = True) as rslt:
     for elem in rslt:
-        print(elem)
-
+        print(elem['key'], elem['value']['count'], elem['value']['sum']/elem['value']['count'])
 
 #example of how to access view created from web
 #http://127.0.0.1:5984/haha/_design/ddoc001/_view/mapreduce?group=true

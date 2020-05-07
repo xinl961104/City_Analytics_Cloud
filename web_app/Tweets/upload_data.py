@@ -1,23 +1,37 @@
-import couchdb
 import json
-import os
-from pathlib import Path
+import time
+from cloudant import client, cloudant
+from cloudant.client import CouchDB
+from cloudant.design_document import DesignDocument
+
+#metadata of couchdb server
+USERNAME = 'admin'
+PASSWORD = 'password'
+URL = 'http://172.26.132.199:5984'
+DBNAME = 'historical_data'
 
 
-#CouchDB authentication
-COUCHDB_SERVER='http://admin:password@172.26.132.199:5984/'
-DBNAME = 'haha'
-couch = couchdb.Server(COUCHDB_SERVER)
-db = couch[DBNAME]
+#initial connection with couchdb server
+client = CouchDB(USERNAME, PASSWORD, url=URL, connect=True)
+my_database = client.create_database(DBNAME)
 
 
+bulk_docs = []
 
-with open('../result_tweets.json') as f:
-    count = 0
+count = 0
+with open('../../../historic_data/twitter-melb.json', encoding="utf8") as f:
+    next(f)
+    start_time = time.time()
     for line in f:
-        data = json.loads(line)
-        db.save(data)
-        if count ==0:
-            print(data)
-        count += 1
+        data = json.loads(line[:-2])
+        bulk_docs.append(data)
+        if (len(bulk_docs)==20):
+            count+=1
+            my_database.bulk_docs(bulk_docs)
+            time_taken = time.time()-start_time
+            percentage = (count*20)/154405640
+            print('time elapsed: ', int(time_taken), ' s', 'time remaining: ', int((time_taken/percentage)*(1-percentage)), ' s')
+            bulk_docs = []
+
+
 
