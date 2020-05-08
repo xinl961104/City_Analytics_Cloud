@@ -27,7 +27,7 @@ with open('../../../historic_data/twitter-melb.json', encoding="utf8") as f:
     next(f)
     start_time = time.time()
     for line in f:
-        data = json.loads(line[:-2])
+        data = json.loads(line[:-2])['doc']
         bulk_docs.append(data)
         if (len(bulk_docs)==batch_size):
             count+=1

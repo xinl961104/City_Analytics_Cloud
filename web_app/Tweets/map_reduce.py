@@ -15,7 +15,7 @@ client = CouchDB(USERNAME, PASSWORD, url=URL, connect=True)
 
 #maping function and reduce function-> can be modified
 map_fun = '''function(doc) {
-                emit(doc.key, doc.compound);
+                emit(doc.region_name, doc.compound);
         }'''
 
 #reduce_fun = '_count'

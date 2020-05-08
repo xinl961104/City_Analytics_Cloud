@@ -51,18 +51,19 @@ sid = SentimentIntensityAnalyzer()
 with view1.custom_result() as rslt:
     to_upload = []
     for row in rslt:
-        for area in mel_areas:
-            if Point(row['key']).within(shape(area.shape)):
-                region_code = area.record[0]
-                region_name = area.record[1]
-                compound_value =  sid.polarity_scores(row['value'])['compound']
-                row['compound'] = compound_value
-                row['region name'] = region_name
-                row['region code'] = region_code
-                to_upload.append(row)
-                if (len(to_upload) == batch_size):
-                    my_database2.bulk_docs(to_upload)
-                    to_upload = []
+        #if ('veg' in row['value']):
+            for area in mel_areas:
+                if Point(row['key']).within(shape(area.shape)):
+                    region_code = area.record[0]
+                    region_name = area.record[1]
+                    compound_value =  sid.polarity_scores(row['value'])['compound']
+                    row['compound'] = compound_value
+                    row['region_name'] = region_name
+                    row['region_code'] = region_code
+                    to_upload.append(row)
+                    if (len(to_upload) == batch_size):
+                        my_database2.bulk_docs(to_upload)
+                        to_upload = []
 my_database2.bulk_docs(to_upload)
 
 

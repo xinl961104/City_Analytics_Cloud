@@ -1,11 +1,26 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
-
 from flask import Flask, render_template, flash, redirect, url_for, g
 from flaskext.couchdb import CouchDBManager, ViewDefinition
 from query import QueryForm
+from cloudant.client import CouchDB
+from cloudant.design_document import DesignDocument
 import simplejson
+
+
+USERNAME = 'terry'
+PASSWORD = '1234567'
+##URL = 'http://172.26.132.199:5984'
+URL = 'http://localhost:5984'
+DBNAME = 'processed_data'
+ddoc_id = 'ddoc001'
+view_id = 'mapreduce'
+
+#initial connection with couchdb server
+client = CouchDB(USERNAME, PASSWORD, url=URL, connect=True)
+my_database = client[DBNAME]
+view1 = my_database.get_design_document(ddoc_id).get_view(view_id)
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'NieYanIsTheBest'
@@ -53,14 +68,18 @@ vegan_map = [
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
+
     form = QueryForm()
     if form.validate_on_submit():
         flash(f'Query submitted!', 'success')
         print(type(form))
-        view1 = ViewDefinition('haha', 'test2', '')
-        document = [test_view[form.postcode.data]]
-        with view1.custom_result() as rslt:
-        flash(list(view1))
+        with view1.custom_result(group = True) as rslt:
+            #each elem should contain a key and a value
+            #a key should be the region name classified by Statistical Area Level 4
+            #value should be the average of sentiment anaysis of that region
+            for elem in rslt:
+                flash(elem['key'])
+                flash(round(elem['value']['sum']/elem['value']['count'], 3))
         ##return render_template('home.html', vegan_map=document,
                                ##form=form)
 
@@ -86,13 +105,6 @@ app.config.update(
         COUCHDB_DATABASE='haha'
     )
 manager = CouchDBManager()
-test_view = ViewDefinition('haha', 'test', '''\
-    function (doc){
-        if (doc.id_str && doc.text){
-            emit(doc.id_str, doc.text)
-        };
-    }''')
-manager.add_viewdef(test_view)
 manager.setup(app)
 if __name__ == '__main__':
     app.run(debug = True)
