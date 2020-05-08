@@ -7,9 +7,9 @@ from flaskext.couchdb import CouchDBManager, ViewDefinition
 from query import QueryForm
 import simplejson
 
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'NieYanIsTheBest'
+
 
 
 # some dummy data, will be replaced when couchDB is deployed
@@ -51,17 +51,19 @@ vegan_map = [
 @app.route('/', methods=['GET', 'POST'])
 
 
-
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     form = QueryForm()
     if form.validate_on_submit():
         flash(f'Query submitted!', 'success')
         print(type(form))
+        view1 = ViewDefinition('haha', 'test2', '')
         document = [test_view[form.postcode.data]]
-        flash(list(test_view['1255808566730121216'])[0])
+        with view1.custom_result() as rslt:
+        flash(list(view1))
         ##return render_template('home.html', vegan_map=document,
                                ##form=form)
+
     return render_template('home.html', vegan_map=vegan_map,
                            form=form)
 
