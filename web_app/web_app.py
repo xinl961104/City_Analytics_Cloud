@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
 from flask import Flask, render_template, flash, redirect, url_for
 from query import QueryForm
 
@@ -44,24 +43,30 @@ vegan_map = [
 
 
 @app.route('/', methods=['GET', 'POST'])
+
+
 @app.route('/home', methods=['GET', 'POST'])
 def home():
+
     form = QueryForm()
     if form.validate_on_submit():
         flash(f'Query submitted!', 'success')
+<<<<<<< HEAD
         return redirect(url_for('home'))
+=======
+
+>>>>>>> 1229186e999b8e7636fea07c970b2c52d2090ba5
 
     return render_template('home.html', vegan_map=vegan_map,
                            form=form)
 
-
 @app.route('/chart')
 def chart():
+    vegan_map = g.couch["002"]
     labels = [r['name'] for r in vegan_map]
     values = [r['vegan_number'] for r in vegan_map]
     return render_template('chart.html', labels=labels
                            , values=values)
 
+app.run(debug = False)
 
-if __name__ == "__main__":
-    app.run(debug=False)

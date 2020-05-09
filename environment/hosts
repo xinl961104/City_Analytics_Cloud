@@ -1,0 +1,10 @@
+[Vegan]
+172.26.132.186
+[CouchDB_master]
+172.26.130.140
+[CouchDB_slave1]
+172.26.132.199
+[CouchDB_slave2]
+172.26.132.34
+[localhost]
+115.146.94.161
