@@ -50,6 +50,7 @@ def home():
     if form.validate_on_submit():
         flash(f'Query submitted!', 'success')
         return redirect(url_for('home'))
+
     return render_template('home.html', vegan_map=vegan_map,
                            form=form)
 

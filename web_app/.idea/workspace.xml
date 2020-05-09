@@ -2,23 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9ac0bcfe-5079-4302-b2bb-e8ff50729680" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dockerTest/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dockerTest/Tweets/requirement.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dockerTest/Tweets/result_tweets.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dockerTest/Tweets/result_tweets_search.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dockerTest/Tweets/search.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dockerTest/Tweets/search_AU_tweet_only.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dockerTest/Tweets/search_processor.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dockerTest/Tweets/stream_listener.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dockerTest/Tweets/stream_processor.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dockerTest/Tweets/twitter_credentials.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dockerTest/build-docker.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dockerTest/entrypoint.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dockerTest/remove-all-containers.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dockerTest/run-docker-image.sh" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tweets/result_tweets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Tweets/result_tweets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_app.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,7 +30,7 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Tweets" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -55,6 +40,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/Tweets" />
     </key>
   </component>
@@ -131,7 +117,7 @@
       <workItem from="1588652663662" duration="128000" />
       <workItem from="1588666350003" duration="1321000" />
       <workItem from="1588775020972" duration="17000" />
-      <workItem from="1588828937753" duration="162000" />
+      <workItem from="1588828937753" duration="3155000" />
     </task>
     <servers />
   </component>
