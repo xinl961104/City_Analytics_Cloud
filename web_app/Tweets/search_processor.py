@@ -51,7 +51,7 @@ sid = SentimentIntensityAnalyzer()
 with view1.custom_result() as rslt:
     to_upload = []
     for row in rslt:
-        #if ('veg' in row['value']):
+        if ('vegan' in row['value']):
             for area in mel_areas:
                 if Point(row['key']).within(shape(area.shape)):
                     region_code = area.record[0]
