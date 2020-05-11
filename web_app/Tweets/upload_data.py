@@ -3,24 +3,15 @@ import time
 from cloudant import client, cloudant
 from cloudant.client import CouchDB
 from cloudant.design_document import DesignDocument
+from db_constants import *
+from db_utils import *
 
-#metadata of couchdb server
-##USERNAME = 'admin'
-##PASSWORD = 'password'
-USERNAME = 'terry'
-PASSWORD = '1234567'
-##URL = 'http://172.26.132.199:5984'
-URL = 'http://localhost:5984'
 DBNAME = 'historical_data'
-
-
 #initial connection with couchdb server
-client = CouchDB(USERNAME, PASSWORD, url=URL, connect=True)
-my_database = client.create_database(DBNAME)
 
+my_database = connect_database(USERNAME, PASSWORD,URL, DBNAME)
 
 bulk_docs = []
-
 count = 0
 batch_size = 250
 with open('../../../historic_data/twitter-melb.json', encoding="utf8") as f:
@@ -28,6 +19,8 @@ with open('../../../historic_data/twitter-melb.json', encoding="utf8") as f:
     start_time = time.time()
     for line in f:
         data = json.loads(line[:-2])['doc']
+        del data['_rev']
+        data['_id'] =  data['id_str']
         bulk_docs.append(data)
         if (len(bulk_docs)==batch_size):
             count+=1

@@ -1,13 +1,10 @@
 import json
-
 from cloudant import client, cloudant
 from cloudant.client import CouchDB
 from cloudant.design_document import DesignDocument
+from db_constants import *
+from db_utils import *
 
-#metadata of couchdb serverreduce_fun = '_count'
-USERNAME = 'terry'
-PASSWORD = '1234567'
-URL = 'http://127.0.0.1:5984'
 DBNAME = 'processed_data'
 
 #initial connection with couchdb server

@@ -7,9 +7,10 @@ batch_size = 250
 with open('../../../historic_data/twitter-melb.json', encoding="utf8") as f:
     next(f)
     start_time = time.time()
+    keys = ["education", "school", "university"]
     for line in f:
         data = json.loads(line[:-2])['doc']['text']
-        num_veg += ('usyd' in data)
+        num_veg += any(i in data.lower() for i in keys)
         count += 1
         if (count%10000 == 0):
             print('tweets analysed: ', count)

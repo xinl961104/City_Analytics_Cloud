@@ -1,6 +1,8 @@
 USERNAME_LOCAL = 'terry'
 PASSWORD_LOCAL = '1234567'
 USERNAME = 'admin'
-PASSWORD = 'admin'
+PASSWORD = 'password'
 URL = 'http://172.26.132.199:5984'
 URL_LOCAL = 'http://localhost:5984'
+
+
