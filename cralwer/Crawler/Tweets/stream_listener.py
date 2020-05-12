@@ -51,8 +51,8 @@ class StdOutListener(StreamListener):
 
 
 #CouchDB authentication
-COUCHDB_SERVER = 'http://admin:password@172.26.132.199:5984/'
-DBNAME = 'raw_testing'
+COUCHDB_SERVER = 'http://admin:password@172.26.130.140:5984/'
+DBNAME = 'rwar'
 couch = couchdb.Server(COUCHDB_SERVER)
 db = couch[DBNAME]
 

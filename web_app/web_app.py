@@ -51,7 +51,11 @@ def home():
     form = QueryForm()
     if form.validate_on_submit():
         flash(f'Query submitted!', 'success')
+<<<<<<< HEAD
+        return redirect(url_for('home'))
+=======
 
+>>>>>>> 1229186e999b8e7636fea07c970b2c52d2090ba5
 
     return render_template('home.html', vegan_map=vegan_map,
                            form=form)
