@@ -6,16 +6,16 @@ class DateInput(forms.DateInput):
 
 
 FEATURES = [
-    ('Ausinner', 'Ausinner'),
-    ('Phone', 'Phone'),
-    ('Beacons', 'Beacons'),
-    ('Bemyeyes', 'Bemyeyes'),
-    ('Books', 'Books'),
-    ('Live Radio', 'Live Radio'),
-    ('Magnifer', 'Magnifer'),
-    ('News', 'News'),
-    ('Podcast', 'Podcast'),
-    ('Timers', 'Timers'),
+    ('Melbourne Inner', 'Melbourne Inner'),
+    ('Melbourne Inner West', 'Melbourne Inner West'),
+    ('Melbourne Inner East', 'Melbourne Inner East'),
+    ('Melbourne Inner South', 'Melbourne Inner South'),
+    ('Melbourne North East', 'Melbourne North East'),
+    ('Melbourne North West', 'Melbourne North West'),
+    ('Melbourne Outer East', 'Melbourne Outer East'),
+    ('Melbourne South East', 'Melbourne South East'),
+    ('Melbourne West', 'Melbourne West'),
+    ('Mornington Peninsula', 'Mornington Peninsula'),
 ]
 
 
