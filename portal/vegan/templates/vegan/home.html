@@ -1,20 +1,14 @@
 {% extends 'vegan/head.html' %}
 {% block content %}
+
     <div class="container" style="margin-left: 100px; margin-top: 50px; margin-bottom: 50px; position: absolute"
          id="totalUser">
-        <div class="row">
-            <div class="col-2 font-weight-bold" style="font-size: 20px">Total User</div>
-            <div class="col-1 "><br></div>
-            <div class="col-4 font-weight-bold" style="font-size: 20px">Active User &nbsp;
-                <span style="font-size: 16px; text-align: center">(last week)</span></div>
-            <div class="w-100"></div>
-            <div class="col-2 border border-dark bg-light text-dark"
-                 style="height: 100px; font-size: 48px; text-align: center;"> 154
+        <div class="row" style="height: 100px; font-size: 48px; text-align: center;">
+            <div class="col-12  border-dark bg-light">
+
+                <p style="font-size: medium; "> Education</p>
             </div>
-            <div class="col-1 "><br></div>
-            <div class="col-2 border border-dark bg-light text-dark"
-                 style="height: 100px; font-size: 48px; text-align: center;">36 <br>
-            </div>
+
         </div>
     </div>
     <!-- text form input page -->
@@ -27,7 +21,7 @@
     <!-- show user interaction diagram -->
     <div class="container" style="margin-left: 100px;position: absolute;" id="userInteraction">
         <div class="row">
-            <div class="col-4 font-weight-bold" style="font-size: 20px">Vegan Diagram </div>
+            <div class="col-4 font-weight-bold" style="font-size: 20px">Vegan Diagram</div>
             <div class="w-100"></div>
             <!-- a spinner should be shown before chart rendered-->
             <div class="col-12 border border-dark bg-light text-dark" style="height: 350px"
@@ -37,50 +31,39 @@
         </div>
     </div>
     <script>
-            var progress = document.getElementById('animationProgress');
-            var ctx = document.getElementById('myChart').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'line',// bar, horizontalBar, pie, line, doughnut, radar, polarArea
-                data: {
-                    labels: {{labels|safe}},
-                    datasets: [{
-                        label: "{{ feature|safe }}",
-                        data: {{data|safe}},
-                        borderColor: 'black',
-                        fill: false,
+        var progress = document.getElementById('animationProgress');
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',// bar, horizontalBar, pie, line, doughnut, radar, polarArea
+            data: {
+                labels: {{labels|safe}},
+                datasets: [{
+                    label: "{{ feature|safe }}",
+                    data: {{data|safe}},
+                    borderColor: 'black',
+                    fill: false,
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
                     }]
                 },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    },
-                    animation: {
-                        duration: 300,
-                        onProgress: function (animation) {
-                            progress.value = animation.currentStep / animation.numSteps;
-                        },
-                        onComplete: function (animation) {
-                            window.setTimeout(function () {
-                                progress.value = 0;
-                            }, 300);
-                        }
-                    },
-                    title: {
-                        display: true,
-                    },
-                    legend: {
-                        disblay: true,
-                        position: 'right',
-                        labels: {
-                            fontColor: '#000'
-                        }
+                title: {
+                    display: true,
+                },
+                legend: {
+                    disblay: true,
+                    position: 'right',
+                    labels: {
+                        fontColor: '#000'
                     }
                 }
-            });
+            }
+        });
     </script>
 
 {% endblock %}

@@ -1,10 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Life Expectency</title>
-</head>
-<body>
+{% extends 'vegan/head.html' %}
+{% block content %}
 
-</body>
-</html>
+    <div class="container" style="margin-left: 100px; margin-top: 50px; margin-bottom: 50px; position: absolute"
+         id="totalUser">
+        <div class="row" style="height: 100px; font-size: 48px; text-align: center;">
+            <div class="col-12  border-dark bg-light">
+
+                <p style="font-size: medium; "> Life Expectancy</p>
+            </div>
+
+        </div>
+    </div>
+    <!-- text form input page -->
+    <form action=" " method="post" id="featureSubmit"
+          style="margin-left: 450px; margin-top: 220px; margin-bottom: 1px; position: relative">
+        {% csrf_token %}
+        {{ featureform }}
+        <input class="btn btn-secondary btn-sm" type="submit" value="Submit">
+    </form>
+    <!-- show user interaction diagram -->
+    <div class="container" style="margin-left: 100px;position: absolute;" id="userInteraction">
+        <div class="row">
+            <div class="col-4 font-weight-bold" style="font-size: 20px">Vegan Diagram</div>
+            <div class="w-100"></div>
+            <!-- a spinner should be shown before chart rendered-->
+            <div class="col-12 border border-dark bg-light text-dark" style="height: 350px"
+                 url-endpoint='{% url "api-data" %}'>
+                <canvas id="myChart" width="400" height="127"></canvas>
+            </div>
+        </div>
+    </div>
+    <script>
+        var progress = document.getElementById('animationProgress');
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',// bar, horizontalBar, pie, line, doughnut, radar, polarArea
+            data: {
+                labels: {{labels|safe}},
+                datasets: [{
+                    label: "{{ feature|safe }}",
+                    data: {{data|safe}},
+                    borderColor: 'black',
+                    fill: false,
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                title: {
+                    display: true,
+                },
+                legend: {
+                    disblay: true,
+                    position: 'right',
+                    labels: {
+                        fontColor: '#000'
+                    }
+                }
+            }
+        });
+    </script>
+
+{% endblock %}
+
+
+
+
+
