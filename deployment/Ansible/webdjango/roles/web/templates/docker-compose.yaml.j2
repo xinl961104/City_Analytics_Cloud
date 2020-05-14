@@ -1,0 +1,21 @@
+version: '3.6'
+
+services:
+  couchdb:
+    image: couchdb:latest
+    restart: always
+    ports:
+      - 5984:5984
+    environment:
+      COUCHDB_USER: {{ couchdb_username }}
+      COUCHDB_PASSWORD: {{ couchdb_password }}
+
+  crawler:
+    build: .
+    image: lx961104/comp90024:crawler
+
+  webdjango:
+    build: .
+    ports:
+      - 80:80
+    image: lx961104/comp90024:webdjango

@@ -1,0 +1,7 @@
+- hosts: localhost
+  vars_files:
+    - host_vars/main.yaml
+  gather_facts: false
+
+  roles:
+    - role: web
