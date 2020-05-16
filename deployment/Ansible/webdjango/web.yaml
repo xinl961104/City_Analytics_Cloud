@@ -3,5 +3,10 @@
     - host_vars/main.yaml
   gather_facts: false
 
+  tasks:
+    - name: Get permission
+      raw: sudo chmod 666 /var/run/docker.sock
+
   roles:
+    - role: volumes
     - role: web

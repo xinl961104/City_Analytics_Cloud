@@ -1,2 +1,3 @@
 couchdb_username: admin
 couchdb_password: password
+data_dir: data
