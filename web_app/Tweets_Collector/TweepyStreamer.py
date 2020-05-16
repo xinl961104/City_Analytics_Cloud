@@ -37,8 +37,8 @@ class StdOutListener(StreamListener):
     """
 
     def __init__(self, fetched_tweets_file_name):
-        COUCHDB_SERVER = 'http://admin:password@115.146.92.188:5984/'
-        # COUCHDB_SERVER = 'http://admin:password@172.26.132.199:5984/'
+#         COUCHDB_SERVER = 'http://admin:password@115.146.92.188:5984/'
+        COUCHDB_SERVER = 'http://admin:password@172.26.132.199:5984/'
         couch = couchdb.Server(COUCHDB_SERVER)
         DBNAME = 'stream_test_05_16s'
         self.db = couch.create(DBNAME)
