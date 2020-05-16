@@ -6,6 +6,12 @@ services:
     restart: always
     ports:
       - 5984:5984
+    volumes:
+      - type: volume
+        source: data
+        target: /{{ data_dir }}
+        volume:
+          nocopy: true
     environment:
       COUCHDB_USER: {{ couchdb_username }}
       COUCHDB_PASSWORD: {{ couchdb_password }}
@@ -19,3 +25,10 @@ services:
     ports:
       - 80:80
     image: lx961104/comp90024:webdjango
+    links:
+      - couchdb
+    depends_on:
+      - couchdb
+
+volumes:
+  data:
