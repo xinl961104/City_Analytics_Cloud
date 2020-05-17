@@ -49,7 +49,7 @@ def home(request):
             code_name = pd.DataFrame(code_name)
             edu_table = edu_table.merge(code_name, left_on='code', right_on='code')
             edu_twitter = edu_table.merge(senti_by_region, left_on='code', right_on='code')
-           # print(edu_twitter.iloc[][])
+            print(edu_twitter)
 
             return render(request, 'vegan/home.html')
 
@@ -59,12 +59,104 @@ def home(request):
 
 
 def income(request):
+    if request.method == 'POST':
+        featureform = featureSelectionForm(request.POST)
+        # Get user input from feature date range selection form
+        if featureform.is_valid():
+            f = featureform.cleaned_data['features']
+            # if the end date is earlier than start date, return the error message
 
-    return render(request, 'vegan/home.html')
+            # CouchDB authentication
+            print(f)
+            username = 'admin'
+            password = 'password'
+            url = 'http://172.26.132.199:5984/'
+            client = CouchDB(username, password, url=url, connect=True)
+            db_processed = client['processed_data']
+            view_processed = db_processed.get_design_document('ddoc001').get_view('mapreduce')
+            view1 = view_processed.custom_result(group=True)
+            senti_by_region = {'code': [], 'senti_scores': [], 'tweet_count': []}
+            with view1 as view1:
+                for row in view1:
+                    senti_by_region['code'].append(int(row['key']))
+                    senti_by_region['senti_scores'].append(round(row['value']['sum'] / row['value']['count'], 3))
+                    senti_by_region['tweet_count'].append(row['value']['count'])
+            senti_by_region = pd.DataFrame(senti_by_region)
+
+            db_income = client['aurin_income']
+            view = db_income.get_design_document('ddoc001').get_view('mapreduce')
+            view_income = view.custom_result(group=False)
+            income_table = {'code': [], 'avg_income': []}
+            with view_income as view_income:
+                for row in view_income:
+                    income_table['code'].append(int(row['key']))
+                    income_table['avg_income'].append(int(row['value']))
+            income_table = pd.DataFrame(income_table)
+
+            code_name = {'code': [206, 207, 208, 209, 210, 211, 212, 213, 214],
+                         'region_name': ['Melbourne - Inner', 'Melbourne - Inner East', 'Melbourne - Inner South',
+                                         'Melbourne - North East', 'Melbourne - North West', 'Melbourne - Outer East',
+                                         'Melbourne - South East', 'Melbourne - West', 'Mornington Peninsula']}
+            code_name = pd.DataFrame(code_name)
+            income_table = income_table.merge(code_name, left_on='code', right_on='code')
+            income_twitter = income_table.merge(senti_by_region, left_on='code', right_on='code')
+            print(income_twitter)
+
+            return render(request, 'vegan/income.html')
+
+    featureform = featureSelectionForm()
+
+    return render(request, 'vegan/income.html', {'featureform': featureform})
 
 
-def lifeExpectancy(request):
-    return render(request, 'vegan/lifeExpectancy.html')
+def donation(request):
+    if request.method == 'POST':
+        featureform = featureSelectionForm(request.POST)
+        # Get user input from feature date range selection form
+        if featureform.is_valid():
+            f = featureform.cleaned_data['features']
+            # if the end date is earlier than start date, return the error message
+
+            # CouchDB authentication
+            print(f)
+            username = 'admin'
+            password = 'password'
+            url = 'http://172.26.132.199:5984/'
+            client = CouchDB(username, password, url=url, connect=True)
+            db_processed = client['processed_data']
+            view_processed = db_processed.get_design_document('ddoc001').get_view('mapreduce')
+            view1 = view_processed.custom_result(group=True)
+            senti_by_region = {'code': [], 'senti_scores': [], 'tweet_count': []}
+            with view1 as view1:
+                for row in view1:
+                    senti_by_region['code'].append(int(row['key']))
+                    senti_by_region['senti_scores'].append(round(row['value']['sum'] / row['value']['count'], 3))
+                    senti_by_region['tweet_count'].append(row['value']['count'])
+            senti_by_region = pd.DataFrame(senti_by_region)
+
+            db_donation = client['aurin_donation']
+            view = db_donation.get_design_document('ddoc001').get_view('mapreduce')
+            view_income = view.custom_result(group=False)
+            donation_table = {'code': [], 'donation_med': []}
+            with view_income as view_income:
+                for row in view_income:
+                    donation_table['code'].append(int(row['key']))
+                    donation_table['donation_med'].append(int(row['value']))
+            donation_table = pd.DataFrame(donation_table)
+
+            code_name = {'code': [206, 207, 208, 209, 210, 211, 212, 213, 214],
+                         'region_name': ['Melbourne - Inner', 'Melbourne - Inner East', 'Melbourne - Inner South',
+                                         'Melbourne - North East', 'Melbourne - North West', 'Melbourne - Outer East',
+                                         'Melbourne - South East', 'Melbourne - West', 'Mornington Peninsula']}
+            code_name = pd.DataFrame(code_name)
+            donation_table = donation_table.merge(code_name, left_on='code', right_on='code')
+            donation_twitter = donation_table.merge(senti_by_region, left_on='code', right_on='code')
+            print(donation_twitter)
+            return render(request, 'vegan/donation.html')
+
+    featureform = featureSelectionForm()
+
+    return render(request, 'vegan/donation.html', {'featureform': featureform})
 
 
 def get_data(request, *args, **kwargs):
