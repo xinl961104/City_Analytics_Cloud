@@ -1,3 +1,4 @@
 #!/bin/bash
 
-. ./openrc.sh; ansible-playbook --ask-become-pass nectar.yaml
+. ./openrc.sh; ansible-playbook nectar.yaml
+#YzA4YmVmOGM2NmMxOTZm
