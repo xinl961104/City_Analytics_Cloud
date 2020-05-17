@@ -34,7 +34,7 @@ place =  api.geo_search(query="AU", granularity = "country")
 place_id = place[0].id
 tweets = tweepy.Cursor(api.search, q = "place:%s"%place_id, tweet_mode='extended', 
                        since = get_targetDate(today), end = today).items()
-sinceid = tweets[0]._json.get('id')
+# sinceid = tweets[0]._json.get('id')
 
 while True:
     try:
