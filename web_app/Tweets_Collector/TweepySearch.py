@@ -3,7 +3,7 @@ from tweepy import OAuthHandler
 import datetime
 import time
 import TwitterCredentials
-from TweepyREST_copy import get_tweet_by_screenname
+from TweepyREST import get_tweet_by_screenname
 
 def load_api():
 
