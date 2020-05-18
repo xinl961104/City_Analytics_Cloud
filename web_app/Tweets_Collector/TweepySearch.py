@@ -28,7 +28,7 @@ today = datetime.date.today()
 screen_name_list = []
 
 count = 0
-stop_iter_count = 10000
+stop_iter_count = 20000
 
 place =  api.geo_search(query="AU", granularity = "country")
 place_id = place[0].id
