@@ -1,5 +1,14 @@
-- hosts: localhost
+# - hosts: CouchDB
+#   vars_files:
+#     - host_vars/couchDB.yaml
+#   gather_facts: false
+
+#   roles:
+#     - role: common
+#     - role: volumes
+
+- hosts: CouchDB_Manager
   gather_facts: false
 
   roles:
-    - couchdb
+    - role: couchDBManager

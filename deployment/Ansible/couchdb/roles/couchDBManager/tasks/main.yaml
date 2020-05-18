@@ -1,0 +1,81 @@
+---
+
+- name: Create couchdb service
+  become: yes
+  shell: docker service create  \
+         --replicas 3  \
+         --name couchdbservice \
+         --publish mode=host,target=5984,published=5984  \
+         --publish mode=host,target=4369,published=4369 \  
+         --publish mode=host,target=9000,published=9000 \
+         -e COUCHDB_ARGS_FILE=/opt/couchdb/etc/local.d/vm.args \
+         --mount type=volume,source=couchdb_volume,destination=/opt/couchdb/data \
+         --mount type=volume,source=couchdb_config,destination=/opt/couchdb/etc/local.d \ 
+         -e COUCHDB_USER=admin \
+         -e COUCHDB_PASSWORD=password  \
+         -d couchdb 
+
+- name: check if the folder exists
+  become: yes
+  stat:
+    path: couchdb_cluster
+  register: if_cluster_folder_exists
+
+- name: Mkdir couchdb_cluster
+  become: yes
+  shell: mkdir couchdb_cluster
+  when: if_cluster_folder_exists.stat.islnk is not defined
+
+- name: Create clusterpara.sh
+  become: yes
+  blockinfile:
+    create: yes
+    path: couchdb_cluster/clusterpara.sh
+    block: |
+      export nodes={{}}
+      export masternode=`echo ${nodes} | cut -f1 -d' '`
+      export declare othernodes=`echo ${nodes[@]} | sed s/${masternode}//`
+      export size=${#nodes[@]}
+      export user=admin
+      export pass=password
+
+- name: Create clusterSetup.sh
+  become: yes
+  blockinfile:
+    create: yes
+    path: couchdb_cluster/clusterSetup.sh
+    block: |
+      for node in ${othernodes} 
+      do
+          curl -XPOST "http://${user}:${pass}@${masternode}:5984/_cluster_setup" \
+          --header "Content-Type: application/json"\
+          --data "{\"action\": \"enable_cluster\", \"bind_address\":\"0.0.0.0\",\
+             \"username\": \"${user}\", \"password\":\"${pass}\", \"port\": \"5984\",\
+             \"remote_node\": \"${node}\", \"node_count\": \"$(echo ${nodes[@]} | wc -w)\",\
+             \"remote_current_user\":\"${user}\", \"remote_current_password\":\"${pass}\"}"
+      done
+      for node in ${othernodes}
+      do
+          curl -XPOST "http://${user}:${pass}@${masternode}:5984/_cluster_setup"\
+          --header "Content-Type: application/json"\
+          --data "{\"action\": \"add_node\", \"host\":\"${node}\",\
+             \"port\": \"5984\", \"username\": \"${user}\", \"password\":\"${pass}\"}"
+      done
+      curl -XPOST "http://${user}:${pass}@${masternode}:5984/_cluster_setup"\
+        --header "Content-Type: application/json" --data "{\"action\": \"finish_cluster\"}"
+
+- name: Execute clusterpara.sh
+  become: yes
+  shell: clusterpara.sh
+
+- name: Execute clusterSetup.sh
+  become: yes
+  shell: clusterSetup.sh
+
+
+
+
+
+
+
+
