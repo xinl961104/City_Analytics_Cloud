@@ -7,6 +7,7 @@ import tweepy
 import TwitterCredentials
 import couchdb
 import json
+import time
 
 
 class TwitterStreamer():
