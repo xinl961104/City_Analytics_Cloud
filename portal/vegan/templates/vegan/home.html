@@ -34,17 +34,30 @@
         var progress = document.getElementById('animationProgress');
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
-            type: 'line',// bar, horizontalBar, pie, line, doughnut, radar, polarArea
+            type: 'bar',// bar, horizontalBar, pie, line, doughnut, radar, polarArea
             data: {
-                labels: {{labels|safe}},
+                labels: {{region_label|safe}},
                 datasets: [{
-                    label: "{{ feature|safe }}",
-                    data: {{data|safe}},
-                    borderColor: 'black',
+                    label: "tertiary population",
+                    data: {{tertiary_list|safe}},
+                    backgroundColor: "blue",
+                    fill: false,
+                },
+                {
+                    label: "senti scores",
+                    data: {{senti_list|safe}},
+                     backgroundColor: "red",
+                    fill: false,
+                },
+                {
+                    label: "tweets count",
+                    data: {{tweet_count|safe}},
+                    backgroundColor: "green",
                     fill: false,
                 }]
             },
             options: {
+                barValueSpacing: 20,
                 scales: {
                     yAxes: [{
                         ticks: {

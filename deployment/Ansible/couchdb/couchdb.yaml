@@ -9,6 +9,7 @@
 
 - hosts: CouchDB_Manager
   gather_facts: false
-
+  vars_files:
+    - host_vars/couchDB.yaml
   roles:
     - role: couchDBManager

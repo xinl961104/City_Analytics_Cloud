@@ -34,7 +34,7 @@
         var progress = document.getElementById('animationProgress');
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
-            type: 'line',// bar, horizontalBar, pie, line, doughnut, radar, polarArea
+            type: 'bar',// bar, horizontalBar, pie, line, doughnut, radar, polarArea
             data: {
                 labels: {{labels|safe}},
                 datasets: [{
@@ -65,7 +65,9 @@
             }
         });
     </script>
+    <script>
 
+    </script>
 {% endblock %}
 
 
