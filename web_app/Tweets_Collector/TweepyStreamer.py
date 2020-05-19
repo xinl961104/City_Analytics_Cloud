@@ -25,7 +25,7 @@ class TwitterStreamer():
                                   TwitterCredentials.ACCESS_TOKEN_SECRET)
 
         stream = Stream(auth, listener)
-        stream.filter(locations =location_list)
+        stream.filter(locations =location_list, stall_warnings=True)
 
 
 class StdOutListener(StreamListener):
