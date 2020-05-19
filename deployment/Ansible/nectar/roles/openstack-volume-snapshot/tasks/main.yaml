@@ -10,4 +10,3 @@
     force: yes
     availability_zone: '{{ availability_zone }}'
   loop: '{{ volumes }}'
-

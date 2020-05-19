@@ -29,3 +29,6 @@
   pip:
     name: ['pip']
     state: latest
+
+- name: Reboot the server and wait for it to come back up.
+  reboot:

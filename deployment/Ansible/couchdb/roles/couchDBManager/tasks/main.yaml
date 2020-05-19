@@ -1,0 +1,59 @@
+---
+- name: remove couchdb service
+  become: yes
+  shell: docker service rm couchdbservice
+
+- name: Create couchdb service
+  become: yes
+  shell: docker service create  \
+         --replicas 3  \
+         --name couchdbservice \
+         --publish mode=host,target=5984,published=5984  \
+         --publish mode=host,target=4369,published=4369 \  
+         --publish mode=host,target=9000,published=9000 \
+         -e COUCHDB_ARGS_FILE=/opt/couchdb/etc/local.d/vm.args \
+         --mount type=volume,source=couchdb_volume,destination=/opt/couchdb/data \
+         --mount type=volume,source=couchdb_config,destination=/opt/couchdb/etc/local.d \ 
+         -e COUCHDB_USER=admin \
+         -e COUCHDB_PASSWORD=password  \
+         -d couchdbservice 
+
+- name: check if the folder exists
+  become: yes
+  stat:
+    path: couchdb_cluster
+  register: if_cluster_folder_exists
+
+- name: Mkdir couchdb_cluster
+  become: yes
+  shell: mkdir couchdb_cluster
+  when: if_cluster_folder_exists.stat.islnk is not defined
+
+- name: Create cluster.sh
+  become: yes
+  blockinfile:
+    create: yes
+    path: couchdb_cluster/cluster.sh
+    block: |
+      export declare nodes=({{ansible_ssh_host}} {{worker1}} {{worker2}})
+      export masternode=`echo ${nodes} | cut -f1 -d' '`
+      export declare othernodes=`echo ${nodes[@]} | sed s/${masternode}//`
+      export size=${#nodes[@]}
+      export user=admin
+      export pass=password
+
+- name: add permission
+  become: yes
+  shell: chmod +wx couchdb_cluster/cluster.sh
+
+- name: Execute cluster.sh
+  become: yes
+  shell: couchdb_cluster/cluster.sh
+
+
+
+
+
+
+
+

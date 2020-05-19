@@ -3,41 +3,86 @@ availability_zone: melbourne-qh2-uom
 
 # Volume
 volumes:
-  - vol_name: vegan-vol-1
-    vol_size: 10
-  - vol_name: couchDB-master
-    vol_size: 10
-  - vol_name: couchDB-slave1
-    vol_size: 10
-  - vol_name: couchDB-slave2
-    vol_size: 10
-
+  - vol_name: vol_master
+    vol_size: 30
+  - vol_name: vol_worker1
+    vol_size: 30
+  - vol_name: vol_worker2
+    vol_size: 30
+  #- vol_name: vol_worker3
+   # vol_size: 50
 
 # Security group
 security_groups:
-  - name: vegan_ssh
-    description: "Vegan security group for SSH access"
+  - name: ssh1
+    description: "Security group for SSH access"
     protocol: tcp
     port_range_min: 22
     port_range_max: 22
     remote_ip_prefix: 0.0.0.0/0
-  - name: vegan_http
-    description: "Vegan security group for HTTP"
+  - name: http1
+    description: "Security group for HTTP"
     protocol: tcp
     port_range_min: 80
     port_range_max: 80
     remote_ip_prefix: 0.0.0.0/0
+  # CouchDB 
+  - name: couchdb
+    description: "couchDB listening port"
+    protocol: tcp
+    port_range_min: 5984
+    port_range_max: 5984
+    remote_ip_prefix: 0.0.0.0/0
+  # CouchDB cluster
+  - name: couchdb_cluster_communication
+    description: "CouchDB uses Erlang-native clustering functionality to achieve a clustered installation. Erlang uses TCP port 4369 (EPMD) to find other nodes, so all servers must be able to speak to each other on this port."
+    protocol: tcp
+    port_range_min: 4369
+    port_range_max: 4369
+    remote_ip_prefix: 0.0.0.0/0
+  - name: couchdb_cluster_listening
+    description: ""
+    protocol: tcp
+    port_range_min: 9000  
+    port_range_max: 9000  
+    remote_ip_prefix: 0.0.0.0/0
+  # Docker Swarm
+  - name: docker_swarm1
+    description: ""
+    protocol: tcp
+    port_range_min: 2377  
+    port_range_max: 2377  
+    remote_ip_prefix: 0.0.0.0/0
+  - name: docker_swarm2
+    description: ""
+    protocol: tcp
+    port_range_min: 7946  
+    port_range_max: 7946  
+    remote_ip_prefix: 0.0.0.0/0
+  - name: docker_swarm3
+    description: ""
+    protocol: udp
+    port_range_min: 4789  
+    port_range_max: 4789  
+    remote_ip_prefix: 0.0.0.0/0
+  - name: docker_swarm4
+    description: ""
+    protocol: udp
+    port_range_min: 7946  
+    port_range_max: 7946  
+    remote_ip_prefix: 0.0.0.0/0
 
 # Instance
 instances:
-  - name: vegan
-    volumes: ['vegan-vol-1']
-  - name: couchDB-master
-    volumes: ['couchDB-master']
-  - name: couchDB-slave1
-    volumes: ['couchDB-slave1']
-  - name: couchDB-slave2
-    volumes: ['couchDB-slave2']
+  - name: master
+    volumes: ['vol_master']
+  - name: worker1
+    volumes: ['vol_worker1']
+  - name: worker2
+    volumes: ['vol_worker2']
+ # - name: worker3
+   # volumes: ['vol_worker3']
+
 
 instance_image: 45225edb-66d8-4fd0-bf41-132a31a18166
 instance_key_name: id_Cassie

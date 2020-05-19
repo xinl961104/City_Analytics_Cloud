@@ -1,0 +1,27 @@
+---
+#config docker swarm
+# - name: Init a new swarm with default parameters
+#   docker_swarm:
+#     state: present
+
+# - name: Update swarm configuration
+#   docker_swarm:
+#     state: present
+#     election_tick: 5
+
+- name: manager leave swarm
+  shell: "sudo docker swarm leave -f"
+  ignore_errors: yes
+
+- name: init a new swarm
+  shell: "sudo docker swarm init --advertise-addr {{ ansible_ssh_host }}"
+
+- name: get the token from manager
+  shell: "echo `sudo docker swarm join-token worker |grep docker`"
+  register: find_output
+
+# Add hosts to Ansible in-memory inventory
+- name: Read token
+  add_host:
+    name: "{{ find_output.stdout}}"
+    groups: token

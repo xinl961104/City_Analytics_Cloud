@@ -1,15 +1,20 @@
-FROM alpine:latest
+FROM python:3
 
-RUN apk add --no-cache python3-dev \
-    && pip3 install --upgrade pip
+ARG http_proxy=http://wwwproxy.unimelb.edu.au:8000/
+ARG https_proxy=http://wwwproxy.unimelb.edu.au:8000/
+ARg no_proxy=localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au
+
+ENV http_proxy=http://wwwproxy.unimelb.edu.au:8000/
+ENV https_proxy=http://wwwproxy.unimelb.edu.au:8000/
+ENV no_proxy=localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au
 
 WORKDIR /app
 
-COPY ./web_app /app
+COPY ./portal /app
 
-RUN pip3 install -r requirements.txt
+COPY requirements.txt /portal/
 
-EXPOSE 80
+RUN pip install -r requirements.txt
 
 ENTRYPOINT [ "python3" ]
-CMD ["web_app.py"]
+CMD ["manage.py runserver localhost:8080"]

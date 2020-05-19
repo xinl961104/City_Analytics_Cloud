@@ -1,0 +1,8 @@
+---
+volumes:
+  - device: /dev/vdb
+    mountpoint: /var/lib/docker
+
+
+worker1: "172.26.133.28"
+worker2: "172.26.131.188"

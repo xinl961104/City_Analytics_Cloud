@@ -1,0 +1,97 @@
+---
+- name: Pull couchdb image
+  become: yes
+  shell: docker pull couchdb
+
+- name: check if the folder exists
+  become: yes
+  stat:
+    path: couchdb_config
+  register: if_folder_exists
+
+- name: Mkdir couchdb_config
+  become: yes
+  shell: mkdir couchdb_config
+  when: if_folder_exists.stat.islnk is not defined
+
+- name: Create couch.ini
+  become: yes
+  blockinfile:
+    create: yes
+    path: couchdb_config/couch.ini
+    block: |
+      [couchdb]
+      uuid = c5727197e6a273b0910ae6851f000b3b
+      [couch_httpd_auth]
+      secret = c5727197e6a273b0910ae6851f000bfb
+
+- name: Create vm.args 
+  become: yes
+  blockinfile:
+    create: yes
+    path: couchdb_config/vm.args
+    block: |
+      # Each node in the system must have a unique name. These are specified through
+      # the Erlang -name flag, which takes the form:
+      #
+      #    -name nodename@<FQDN>
+      #
+      # or
+      #
+      #    -name nodename@<IP-ADDRESS>
+      -name couchdb@{{ ansible_ssh_host }}
+      # All nodes must share the same magic cookie for distributed Erlang to work.
+      -setcookie couchdb_cookie
+      # Tell kernel and SASL not to log anything
+      -kernel error_logger silent
+      -sasl sasl_error_logger false
+      # Use kernel poll functionality if supported by emulator
+      +K true
+      # Start a pool of asynchronous IO threads
+      +A 16
+      # Comment this line out to enable the interactive Erlang shell on startup
+      +Bd -noinput
+      # Force use of the smp scheduler, fixes #1296
+      -smp enable
+      # Set maximum SSL session lifetime to reap terminated replication readers
+      -ssl session_lifetime 300
+      # set the port range for the communicating with other CouchDB nodes in the cluster
+      -kernel inet_dist_listen_min 9000
+      -kernel inet_dist_listen_max 9000
+
+# - name: Remove busybox image
+#   become: yes
+#   shell: docker rm -f busybox
+
+- name: Run busybox
+  become: yes
+  shell: docker run --name busybox -v couchdb_config:/data -d busybox
+
+- name: Copy files
+  become: yes
+  shell: docker cp couchdb_config/vm.args busybox:/data/vm.args
+  when: if_folder_exists.stat.islnk is defined
+
+- name: Copy files
+  become: yes
+  shell: docker cp couchdb_config/couch.ini busybox:/data/couch.ini
+  when: if_folder_exists.stat.islnk is defined
+
+- name: Remove busybox image
+  become: yes
+  shell: docker rm -f busybox
+
+- name: Read hosts
+  add_host:
+    name: "{{ ansible_all_ipv4_addresses}}"
+    groups: couchhosts
+# - name: Remove CouchDB
+#   become: yes
+#   shell: docker rm -f couchdb
+
+# - name: Run CouchDB
+#   become: yes
+#   shell: docker run --name couchdb -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=password -v couchdb_config:/opt/couchdb/etc/local.d -d couchdb
+
+
+

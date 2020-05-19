@@ -1,0 +1,7 @@
+---
+#config docker swarm workers
+
+- name: Join tokens
+  become: yes
+  shell: '{{groups["token"][0]}}'
+
