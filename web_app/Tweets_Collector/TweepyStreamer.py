@@ -60,9 +60,9 @@ class StdOutListener(StreamListener):
 
                 return True
             
-                except tweepy.TweepError:
-                    print('Tweepy error. The system is gonna sleep for 1 min. ')
-                    time.sleep(60)
+            except tweepy.TweepError:
+                print('Tweepy error. The system is gonna sleep for 1 min. ')
+                time.sleep(60)
 
             except BaseException as e:
 
