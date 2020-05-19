@@ -59,6 +59,10 @@ class StdOutListener(StreamListener):
                 print(str(tweet) + '\n\n\n\n')
 
                 return True
+            
+                except tweepy.TweepError:
+                    print('Tweepy error. The system is gonna sleep for 1 min. ')
+                    time.sleep(60)
 
             except BaseException as e:
 
@@ -66,6 +70,7 @@ class StdOutListener(StreamListener):
 
             except StopIteration:
                 pass
+            
         return True
 
 
