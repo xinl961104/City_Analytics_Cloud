@@ -10,11 +10,7 @@ from cloudant import CouchDB
 def home(request):
     if request.method == 'POST':
         featureform = featureSelectionForm(request.POST)
-        # Get user input from feature date range selection form
         if featureform.is_valid():
-
-            # f = featureform.cleaned_data['features']
-            # if the end date is earlier than start date, return the error message
             MelbourneInner = featureform.cleaned_data['MelbourneInner']
             MelbourneInnerEast = featureform.cleaned_data['MelbourneInnerEast']
             MelbourneInnerSouth = featureform.cleaned_data['MelbourneInnerSouth']
@@ -27,7 +23,6 @@ def home(request):
 
             recieved = [MelbourneInner, MelbourneInnerEast, MelbourneInnerSouth, MelbourneNorthEast, MelbourneNorthWest,
                         MelbourneOuterEast, MelbourneSouthEast, MelbourneWest, MorningtonPeninsula]
-            print(recieved)
             # CouchDB authentication
             username = 'admin'
             password = 'password'
@@ -98,9 +93,18 @@ def income(request):
         featureform = featureSelectionForm(request.POST)
         # Get user input from feature date range selection form
         if featureform.is_valid():
-            f = featureform.cleaned_data['features']
-            # if the end date is earlier than start date, return the error message
+            MelbourneInner = featureform.cleaned_data['MelbourneInner']
+            MelbourneInnerEast = featureform.cleaned_data['MelbourneInnerEast']
+            MelbourneInnerSouth = featureform.cleaned_data['MelbourneInnerSouth']
+            MelbourneNorthEast = featureform.cleaned_data['MelbourneNorthEast']
+            MelbourneNorthWest = featureform.cleaned_data['MelbourneNorthWest']
+            MelbourneOuterEast = featureform.cleaned_data['MelbourneOuterEast']
+            MelbourneSouthEast = featureform.cleaned_data['MelbourneSouthEast']
+            MelbourneWest = featureform.cleaned_data['MelbourneWest']
+            MorningtonPeninsula = featureform.cleaned_data['MorningtonPeninsula']
 
+            recieved = [MelbourneInner, MelbourneInnerEast, MelbourneInnerSouth, MelbourneNorthEast, MelbourneNorthWest,
+                        MelbourneOuterEast, MelbourneSouthEast, MelbourneWest, MorningtonPeninsula]
             # CouchDB authentication
             # print(f)
             username = 'admin'
@@ -132,12 +136,36 @@ def income(request):
                          'region_name': ['Melbourne - Inner', 'Melbourne - Inner East', 'Melbourne - Inner South',
                                          'Melbourne - North East', 'Melbourne - North West', 'Melbourne - Outer East',
                                          'Melbourne - South East', 'Melbourne - West', 'Mornington Peninsula']}
+            region_label = code_name['region_name']
             code_name = pd.DataFrame(code_name)
             income_table = income_table.merge(code_name, left_on='code', right_on='code')
             income_twitter = income_table.merge(senti_by_region, left_on='code', right_on='code')
             # print(income_twitter)
-            print(income_twitter.iloc[1, 4])
-            return render(request, 'vegan/income.html')
+            print(income_twitter)
+            # print(region_label)
+            tertiary_list = [income_twitter.iloc[0, 1], income_twitter.iloc[1, 1], income_twitter.iloc[2, 1],
+                             income_twitter.iloc[3, 1], income_twitter.iloc[4, 1], income_twitter.iloc[5, 1],
+                             income_twitter.iloc[6, 1], income_twitter.iloc[7, 1], income_twitter.iloc[8, 1]]
+            print(tertiary_list)
+
+            senti_list = [income_twitter.iloc[0, 3], income_twitter.iloc[1, 3], income_twitter.iloc[2, 3],
+                          income_twitter.iloc[3, 3], income_twitter.iloc[4, 3], income_twitter.iloc[5, 3],
+                          income_twitter.iloc[6, 3], income_twitter.iloc[7, 3], income_twitter.iloc[8, 3]]
+            print(senti_list)
+            tweet_count = [income_twitter.iloc[0, 4], income_twitter.iloc[1, 4], income_twitter.iloc[2, 4],
+                           income_twitter.iloc[3, 4], income_twitter.iloc[4, 4], income_twitter.iloc[5, 4],
+                           income_twitter.iloc[6, 4], income_twitter.iloc[7, 4], income_twitter.iloc[8, 4]]
+            print(tweet_count)
+
+            # print(zip(recieved, region_label, tertiary_list, senti_list, tweet_count))
+            region_label[:] = [i for i, j in zip(region_label, recieved) if j]
+            tertiary_list[:] = [i for i, j in zip(tertiary_list, recieved) if j]
+            senti_list[:] = [i for i, j in zip(senti_list, recieved) if j]
+            tweet_count[:] = [i for i, j in zip(tweet_count, recieved) if j]
+            print(region_label)
+            args = {'featureform': featureform, 'avg_income': tertiary_list, 'senti_list': senti_list,
+                    'tweet_count': tweet_count, 'region_label': region_label}
+            return render(request, 'vegan/income.html', args)
 
     featureform = featureSelectionForm()
 
@@ -149,11 +177,21 @@ def donation(request):
         featureform = featureSelectionForm(request.POST)
         # Get user input from feature date range selection form
         if featureform.is_valid():
-            f = featureform.cleaned_data['features']
-            # if the end date is earlier than start date, return the error message
+            MelbourneInner = featureform.cleaned_data['MelbourneInner']
+            MelbourneInnerEast = featureform.cleaned_data['MelbourneInnerEast']
+            MelbourneInnerSouth = featureform.cleaned_data['MelbourneInnerSouth']
+            MelbourneNorthEast = featureform.cleaned_data['MelbourneNorthEast']
+            MelbourneNorthWest = featureform.cleaned_data['MelbourneNorthWest']
+            MelbourneOuterEast = featureform.cleaned_data['MelbourneOuterEast']
+            MelbourneSouthEast = featureform.cleaned_data['MelbourneSouthEast']
+            MelbourneWest = featureform.cleaned_data['MelbourneWest']
+            MorningtonPeninsula = featureform.cleaned_data['MorningtonPeninsula']
+
+            recieved = [MelbourneInner, MelbourneInnerEast, MelbourneInnerSouth, MelbourneNorthEast, MelbourneNorthWest,
+                        MelbourneOuterEast, MelbourneSouthEast, MelbourneWest, MorningtonPeninsula]
 
             # CouchDB authentication
-            print(f)
+            #print(f)
             username = 'admin'
             password = 'password'
             url = 'http://172.26.132.199:5984/'
@@ -183,14 +221,36 @@ def donation(request):
                          'region_name': ['Melbourne - Inner', 'Melbourne - Inner East', 'Melbourne - Inner South',
                                          'Melbourne - North East', 'Melbourne - North West', 'Melbourne - Outer East',
                                          'Melbourne - South East', 'Melbourne - West', 'Mornington Peninsula']}
+            region_label = code_name['region_name']
             code_name = pd.DataFrame(code_name)
             donation_table = donation_table.merge(code_name, left_on='code', right_on='code')
             donation_twitter = donation_table.merge(senti_by_region, left_on='code', right_on='code')
+            tertiary_list = [donation_twitter.iloc[0, 1], donation_twitter.iloc[1, 1], donation_twitter.iloc[2, 1],
+                             donation_twitter.iloc[3, 1], donation_twitter.iloc[4, 1], donation_twitter.iloc[5, 1],
+                             donation_twitter.iloc[6, 1], donation_twitter.iloc[7, 1], donation_twitter.iloc[8, 1]]
+            print(tertiary_list)
+
+            senti_list = [donation_twitter.iloc[0, 3], donation_twitter.iloc[1, 3], donation_twitter.iloc[2, 3],
+                          donation_twitter.iloc[3, 3], donation_twitter.iloc[4, 3], donation_twitter.iloc[5, 3],
+                          donation_twitter.iloc[6, 3], donation_twitter.iloc[7, 3], donation_twitter.iloc[8, 3]]
+            print(senti_list)
+            tweet_count = [donation_twitter.iloc[0, 4], donation_twitter.iloc[1, 4], donation_twitter.iloc[2, 4],
+                           donation_twitter.iloc[3, 4], donation_twitter.iloc[4, 4], donation_twitter.iloc[5, 4],
+                           donation_twitter.iloc[6, 4], donation_twitter.iloc[7, 4], donation_twitter.iloc[8, 4]]
+            print(tweet_count)
+
+            # print(zip(recieved, region_label, tertiary_list, senti_list, tweet_count))
+            region_label[:] = [i for i, j in zip(region_label, recieved) if j]
+            tertiary_list[:] = [i for i, j in zip(tertiary_list, recieved) if j]
+            senti_list[:] = [i for i, j in zip(senti_list, recieved) if j]
+            tweet_count[:] = [i for i, j in zip(tweet_count, recieved) if j]
+            print(region_label)
+            args = {'featureform': featureform, 'donation_med': tertiary_list, 'senti_list': senti_list,
+                    'tweet_count': tweet_count, 'region_label': region_label}
             print(donation_twitter)
-            return render(request, 'vegan/donation.html')
+            return render(request, 'vegan/donation.html', args)
 
     featureform = featureSelectionForm()
-
     return render(request, 'vegan/donation.html', {'featureform': featureform})
 
 
