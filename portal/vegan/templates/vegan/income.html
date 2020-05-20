@@ -6,7 +6,13 @@
         <div class="row" style="height: 100px; font-size: 48px; text-align: center;">
             <div class="col-12  border-dark bg-light">
 
-                <p style="font-size: medium; "> Income</p>
+                <p style="font-size: medium; "> From our experience, we always have the stereotype on the people who
+                    show interest in art. We might assume that art is for rich people, but there is no grounding
+                    evidence for that. This topic is established to find out whether higher income level have any
+                    correlation with people’s attitude on art in an area. We compared the average income of people in
+                    dollars per year of every region. From the result obtained, we observe that, although with some
+                    outliers, but generally the higher the average income, the more positive people’s attitude on art
+                    can be. Art is really for rich people! </p>
             </div>
 
         </div>
@@ -36,19 +42,44 @@
         var myChart = new Chart(ctx, {
             type: 'bar',// bar, horizontalBar, pie, line, doughnut, radar, polarArea
             data: {
-                labels: {{labels|safe}},
+                labels: {{region_label|safe}},
                 datasets: [{
-                    label: "{{ feature|safe }}",
-                    data: {{data|safe}},
-                    borderColor: 'black',
+                    label: "tertiary population",
+                    data: {{tertiary_list|safe}},
+                    yAxisID: 'A',
+                    backgroundColor: "#3e95cd",
                     fill: false,
-                }]
+                },
+                    {
+                        label: "senti scores",
+                        data: {{senti_list|safe}},
+                        yAxisID: 'B',
+                        backgroundColor: "#c45850",
+                        fill: false,
+                    },
+                    {
+                        label: "tweets count",
+                        data: {{tweet_count|safe}},
+                        yAxisID: 'A',
+                        backgroundColor: "#3cba9f",
+                        fill: false,
+                    }]
             },
             options: {
+                barValueSpacing: 20,
                 scales: {
                     yAxes: [{
+                        id: 'A',
+                        position: 'left',
                         ticks: {
                             beginAtZero: true
+                        }
+                    }, {
+                        id: 'B',
+                        position: 'right',
+                        ticks: {
+                            suggestedMin: -1,
+                            suggestedMax: 1
                         }
                     }]
                 },
@@ -65,9 +96,7 @@
             }
         });
     </script>
-    <script>
 
-    </script>
 {% endblock %}
 
 
