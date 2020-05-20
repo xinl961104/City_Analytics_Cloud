@@ -12,9 +12,22 @@ def home(request):
         featureform = featureSelectionForm(request.POST)
         # Get user input from feature date range selection form
         if featureform.is_valid():
-            f = featureform.cleaned_data['features']
-            # if the end date is earlier than start date, return the error message
 
+            # f = featureform.cleaned_data['features']
+            # if the end date is earlier than start date, return the error message
+            MelbourneInner = featureform.cleaned_data['MelbourneInner']
+            MelbourneInnerWest = featureform.cleaned_data['MelbourneInnerWest']
+            MelbourneInnerEast = featureform.cleaned_data['MelbourneInnerEast']
+            MelbourneInnerSouth = featureform.cleaned_data['MelbourneInnerSouth']
+            MelbourneNorthEast = featureform.cleaned_data['MelbourneNorthEast']
+            MelbourneNorthWest = featureform.cleaned_data['MelbourneNorthWest']
+            MelbourneOuterEast = featureform.cleaned_data['MelbourneOuterEast']
+            MelbourneWest = featureform.cleaned_data['MelbourneWest']
+            MorningtonPeninsula = featureform.cleaned_data['MorningtonPeninsula']
+
+            recieved = [MelbourneInner, MelbourneInnerWest, MelbourneInnerEast, MelbourneInnerSouth, MelbourneNorthEast,
+                        MelbourneNorthWest, MelbourneOuterEast, MelbourneWest, MorningtonPeninsula]
+            print(recieved)
             # CouchDB authentication
             username = 'admin'
             password = 'password'
@@ -52,20 +65,27 @@ def home(request):
             edu_twitter = edu_table.merge(senti_by_region, left_on='code', right_on='code')
             # print(edu_twitter)
             # print(region_label)
-            tertiary_list = [edu_twitter.iloc[0, 1],edu_twitter.iloc[1, 1], edu_twitter.iloc[2, 1],
-                             edu_twitter.iloc[3, 1],edu_twitter.iloc[4, 1], edu_twitter.iloc[5, 1],
-                             edu_twitter.iloc[6, 1],edu_twitter.iloc[7, 1], edu_twitter.iloc[8, 1]]
+            tertiary_list = [edu_twitter.iloc[0, 1], edu_twitter.iloc[1, 1], edu_twitter.iloc[2, 1],
+                             edu_twitter.iloc[3, 1], edu_twitter.iloc[4, 1], edu_twitter.iloc[5, 1],
+                             edu_twitter.iloc[6, 1], edu_twitter.iloc[7, 1], edu_twitter.iloc[8, 1]]
             print(tertiary_list)
 
-            senti_list = [edu_twitter.iloc[0, 3],edu_twitter.iloc[1, 3], edu_twitter.iloc[2, 3],
-                             edu_twitter.iloc[3, 3],edu_twitter.iloc[4, 3], edu_twitter.iloc[5, 3],
-                             edu_twitter.iloc[6, 3],edu_twitter.iloc[7, 3], edu_twitter.iloc[8, 3]]
+            senti_list = [edu_twitter.iloc[0, 3], edu_twitter.iloc[1, 3], edu_twitter.iloc[2, 3],
+                          edu_twitter.iloc[3, 3], edu_twitter.iloc[4, 3], edu_twitter.iloc[5, 3],
+                          edu_twitter.iloc[6, 3], edu_twitter.iloc[7, 3], edu_twitter.iloc[8, 3]]
             print(senti_list)
             tweet_count = [edu_twitter.iloc[0, 4], edu_twitter.iloc[1, 4], edu_twitter.iloc[2, 4],
-                          edu_twitter.iloc[3, 4], edu_twitter.iloc[4, 4], edu_twitter.iloc[5, 4],
-                          edu_twitter.iloc[6, 4], edu_twitter.iloc[7, 4], edu_twitter.iloc[8, 4]]
+                           edu_twitter.iloc[3, 4], edu_twitter.iloc[4, 4], edu_twitter.iloc[5, 4],
+                           edu_twitter.iloc[6, 4], edu_twitter.iloc[7, 4], edu_twitter.iloc[8, 4]]
             print(tweet_count)
-            args = {'featureform': featureform, 'tertiary_list': tertiary_list, 'senti_list': senti_list, 'tweet_count': tweet_count, 'region_label': region_label}
+            #print(zip(recieved, region_label, tertiary_list, senti_list, tweet_count))
+            region_label[:] = [i for i, j in zip(region_label, recieved) if j]
+            tertiary_list[:] = [i for i, j in zip(tertiary_list, recieved) if j]
+            senti_list[:] = [i for i, j in zip(senti_list, recieved) if j]
+            tweet_count[:] = [i for i, j in zip(tweet_count, recieved) if j]
+            print(region_label)
+            args = {'featureform': featureform, 'tertiary_list': tertiary_list, 'senti_list': senti_list,
+                    'tweet_count': tweet_count, 'region_label': region_label}
             return render(request, 'vegan/home.html', args)
 
     featureform = featureSelectionForm()
