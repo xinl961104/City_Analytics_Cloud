@@ -1,27 +1,80 @@
 {% extends 'vegan/head.html' %}
 {% block content %}
-
-    <div class="container" style="margin-left: 100px; margin-top: 50px; margin-bottom: 50px; position: absolute"
+    <h2 style="margin-top:20px; margin-left: 100px; font-size:20px;font-weight: bold;">Education Overview:</h2>
+    <div class="container" style="margin-left: 100px; margin-top: 5px; margin-bottom: 50px; position: absolute"
          id="totalUser">
         <div class="row" style="height: 100px; font-size: 48px; text-align: center;">
             <div class="col-12  border-dark bg-light">
-
-                <p style="font-size: medium; "> Education</p>
+                <p style="font-size: 16px; text-align: justify ">
+                    Intuitively, we always consider people with a higher degree of education will appreciate art more
+                    because we assume that they have more knowledge and are smarter, therefore they should be capable of
+                    understanding more complex ideas, which is a very important aspect of art.<br>
+                    However, there is never a
+                    limitation for people to devote them into art. Anyone can be an artist and can appreciate art. This
+                    topic is to find out whether there is a correlation with people’s attitude on art and the number of
+                    people that take tertiary education in a region in Greater Melbourne Area. <br>The result shows that,
+                    although with an outlier, generally, the more positive people’s attitude on art is, the more willing
+                    people are to invest in tertiary education, which in this case, means more people choose to take
+                    tertiary education.
+                </p>
             </div>
 
         </div>
     </div>
     <!-- text form input page -->
+    {#    <form action=" " method="post" id="featureSubmit"#}
+    {#          style="margin-left: 100px; margin-top: 220px; margin-bottom: 1px; position: relative">#}
+    {#        {% csrf_token %}#}
+    {#        {{ featureform }}#}
+    {#        <input class="btn btn-secondary btn-sm" type="submit" value="Submit">#}
+    {#    </form>#}
+    <h2 style="margin-top:190px; margin-left: 100px; font-size:20px ">Please select the areas:</h2>
     <form action=" " method="post" id="featureSubmit"
-          style="margin-left: 450px; margin-top: 220px; margin-bottom: 1px; position: relative">
+          style="margin-left: 100px; margin-top: 15px; margin-bottom: 1px; width: 1200px; position: relative">
         {% csrf_token %}
-        {{ featureform }}
-        <input class="btn btn-secondary btn-sm" type="submit" value="Submit">
+        <div class="form-check form-check-inline">
+            {{ featureform.MelbourneInner }}
+            <label class="form-check-label" for="inlineCheckbox1">Melbourne Inner</label>
+        </div>
+        <div class="form-check form-check-inline">
+            {{ featureform.MelbourneInnerWest }}
+            <label class="form-check-label" for="inlineCheckbox2">Melbourne Inner West</label>
+        </div>
+        <div class="form-check form-check-inline">
+            {{ featureform.MelbourneInnerEast }}
+            <label class="form-check-label" for="inlineCheckbox3">Melbourne Inner East</label>
+        </div>
+        <div class="form-check form-check-inline">
+            {{ featureform.MelbourneInnerSouth }}
+            <label class="form-check-label" for="inlineCheckbox1">Melbourne Inner South</label>
+        </div>
+        <div class="form-check form-check-inline">
+            {{ featureform.MelbourneNorthEast }}
+            <label class="form-check-label" for="inlineCheckbox2">Melbourne North East</label>
+        </div>
+        <div class="form-check form-check-inline">
+            {{ featureform.MelbourneNorthWest }}
+            <label class="form-check-label" for="inlineCheckbox3">Melbourne North West</label>
+        </div>
+        <div class="form-check form-check-inline">
+            {{ featureform.MelbourneOuterEast }}
+            <label class="form-check-label" for="inlineCheckbox1">Melbourne Outer East</label>
+        </div>
+        <div class="form-check form-check-inline">
+            {{ featureform.MelbourneWest }}
+            <label class="form-check-label" for="inlineCheckbox2">Melbourne West</label>
+        </div>
+        <div class="form-check form-check-inline">
+            {{ featureform.MorningtonPeninsula }}
+            <label class="form-check-label" for="inlineCheckbox3">Mornington Peninsula </label>
+        </div>
+        <input class="btn btn-secondary btn-sm" style="margin-left: 520px; margin-top: 20px" type="submit" value="Submit">
     </form>
+
     <!-- show user interaction diagram -->
     <div class="container" style="margin-left: 100px;position: absolute;" id="userInteraction">
         <div class="row">
-            <div class="col-4 font-weight-bold" style="font-size: 20px">Vegan Diagram</div>
+            <div class="col-4 font-weight-bold" style="font-size: 20px;">Art Diagram</div>
             <div class="w-100"></div>
             <!-- a spinner should be shown before chart rendered-->
             <div class="col-12 border border-dark bg-light text-dark" style="height: 350px"
@@ -40,28 +93,40 @@
                 datasets: [{
                     label: "tertiary population",
                     data: {{tertiary_list|safe}},
-                    backgroundColor: "blue",
+                    yAxisID: 'A',
+                    backgroundColor: "#3e95cd",
                     fill: false,
                 },
-                {
-                    label: "senti scores",
-                    data: {{senti_list|safe}},
-                     backgroundColor: "red",
-                    fill: false,
-                },
-                {
-                    label: "tweets count",
-                    data: {{tweet_count|safe}},
-                    backgroundColor: "green",
-                    fill: false,
-                }]
+                    {
+                        label: "senti scores",
+                        data: {{senti_list|safe}},
+                        yAxisID: 'B',
+                        backgroundColor: "#c45850",
+                        fill: false,
+                    },
+                    {
+                        label: "tweets count",
+                        data: {{tweet_count|safe}},
+                        yAxisID: 'A',
+                        backgroundColor: "#3cba9f",
+                        fill: false,
+                    }]
             },
             options: {
                 barValueSpacing: 20,
                 scales: {
                     yAxes: [{
+                        id: 'A',
+                        position: 'left',
                         ticks: {
                             beginAtZero: true
+                        }
+                    }, {
+                        id: 'B',
+                        position: 'right',
+                        ticks: {
+                            suggestedMin: -1,
+                            suggestedMax: 1
                         }
                     }]
                 },

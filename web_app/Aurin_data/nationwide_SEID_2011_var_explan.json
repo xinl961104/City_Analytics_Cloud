@@ -1,0 +1,102 @@
+{
+  "organisation": "TUA_PHIDU",
+  "name": "tua_phidu_2015_lga_aust_irsd_2011",
+  "title": "LGA15 Index of Relative Socio-economic Disadvantage, Min & Max SA1 Scores - 2011",
+  "legal": {
+    "attribution": "{datasource.organisationTitle}, ({dataset.attributionYear}): {dataset.title}; accessed from AURIN on {dateOfAccess}.",
+    "attributionYear": "2013",
+    "clickthrough": false,
+    "copyrightNotice": "&copy; {datasource.organisationTitle} {dataset.copyrightYear}",
+    "copyrightYear": "2017",
+    "licenceType": "Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Australia (CC BY-NC-SA 3.0 AU)"
+  },
+  "referenceSystemIdentifier": "urn:x-ogc:def:crs:EPSG:4283",
+  "geoLevel": "lga2011",
+  "key": "lga_code",
+  "keyRegex": null,
+  "availability": "true",
+  "geomField": "wkb_geometry",
+  "keyword": "tua,torrens university australia,phidu,public health information development unit,lga profile 2015,irsd,summary measure of disadvantage,index of relative socio-economic disadvantage",
+  "theme": null,
+  "temporalExtent": {
+    "beginDate": "2011-01-01T00:00:00",
+    "endDate": "2011-12-31T00:00:00",
+    "selectTime": false
+  },
+  "type": "dataset",
+  "_id": "dataset-TUA_PHIDU-tua_phidu_2015_lga_aust_irsd_2011-lga2011",
+  "bbox": null,
+  "abstract": "The Index of Relative Socio-economic Disadvantage (ISRD) has a base of 1000 for Australia: scores above 1000 indicate a relative lack of disadvantage and those below 1000 indicate relatively greater disadvantage. This data set highlights minumum and maximum scores of the Statistical Areas Level 1, in a given Local Government Area (all entries that were classified as not shown, not published or not applicable were assigned a null value; no data was provided for Maralinga Tjarutja LGA, in South Australia).\n\n<br/>Data is by LGA 2015 profile (based on the LGA 2011 geographic boundaries).  For further information on the IRSD refer to: \n<a href=http://www.abs.gov.au/websitedbs/censushome.nsf/home/seifa>http://www.abs.gov.au/</a>.<br/> \n\nNote: The LGA data were re-produced from the ABS originals. Data for other geographic levels were constructed using population weighted averages, based on the published ABS SA2 data.<br/> \n\nSource: Compiled by PHIDU based on ABS Socio-economic Indexes for Areas (SEIFA), 2011 data.\n",
+  "selectedAttributes": [
+    {
+      "name": "lga_code",
+      "type": "Integer",
+      "title": "Local Government Area Code",
+      "description": "Local Government Area Code (2011).",
+      "stype": "ordinal",
+      "isDimension": false
+    },
+    {
+      "name": "lga_name",
+      "type": "String",
+      "title": "Local Government Area Name",
+      "description": "Local Government Area Name (2011).",
+      "stype": "nominal",
+      "isDimension": false
+    },
+    {
+      "name": "ste_name",
+      "type": "String",
+      "title": "State Name",
+      "description": "Name of Australian sate or Territory.",
+      "stype": "nominal",
+      "isDimension": false
+    },
+    {
+      "name": "aust_rank",
+      "type": "Integer",
+      "title": "Australian Rank",
+      "description": "Australian rank out of the 564 local government areas (highest score ranked 1).",
+      "stype": "ratio",
+      "isDimension": false
+    },
+    {
+      "name": "index_score",
+      "type": "Integer",
+      "title": "Index Score",
+      "description": "The index score for the area (the Australian base score is 1000).",
+      "stype": "ratio",
+      "isDimension": false
+    },
+    {
+      "name": "res_pop_count",
+      "type": "Integer",
+      "title": "Usual Resident Population",
+      "description": "Usual resident population (Census 2011).",
+      "stype": "ratio",
+      "isDimension": false
+    }
+  ],
+  "filter": {
+    "filterType": "tabular",
+    "feature": {
+      "key": "lga_code",
+      "geoLevel": "lga2011",
+      "geoField": "ignored",
+      "year": "2006",
+      "featureBbox": [
+        96.81676569599999,
+        -43.740509603,
+        159.109219008,
+        -9.142175977
+      ],
+      "featureType": "country",
+      "featureInstance": "au",
+      "featureName": "Australia",
+      "referenceSystemIdentifier": "urn:x-ogc:def:crs:EPSG:4283",
+      "prefix": "",
+      "keyTransform": null
+    },
+    "states": []
+  }
+}
