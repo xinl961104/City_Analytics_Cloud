@@ -1,0 +1,13 @@
+- hosts: master
+  vars_files:
+    - host_vars/main.yaml
+  gather_facts: false
+
+  tasks:
+    - name: Get permission
+      raw: sudo chmod 666 /var/run/docker.sock
+
+  roles:
+    - role: Tweet_Collect
+    - role: Tweet_Process
+    - role: web

@@ -1,0 +1,27 @@
+- name: Create Web directory
+  tags: 'web'
+  become: yes
+  file:
+    path: "{{ web_dir }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    recurse: yes
+    state: directory
+
+- name: remove artweb service
+  tags: 'web'
+  raw: sudo docker service rm artweb
+  ignore_errors: True
+
+- name: Pull artweb image
+  tags: 'wen'
+  raw: sudo docker pull lx961104/comp90024:artweb_v1
+
+- name: run artweb service
+  tags: 'web'
+  raw: sudo docker service create \
+        --replicas 3 \
+        --name artweb  \
+        --mount type=volume,source=web_volume,destination=/opt/web/data \
+        --publish mode=host,target=80,published=80
+        lx961104/comp90024:artweb_v1
