@@ -1,3 +1,5 @@
+ansible_python_interpreter: /usr/bin/python3
+ansible_user: ubuntu
 couchdb_username: admin
 couchdb_password: password
 data_dir: data

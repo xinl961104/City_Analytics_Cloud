@@ -1,0 +1,16 @@
+- name: remove tweet collector service
+  tags: 'tweet_process'
+  raw: sudo docker service rm tweet_process
+  ignore_errors: True
+
+
+- name: Pull tweet process image
+  tags: 'tweet_process'
+  raw: sudo docker pull lx961104/comp90024:data_processing_v2
+
+- name: run tweet process container
+  tags: 'tweet_process'
+  raw: sudo docker service create \
+        --replicas 1 \
+        --name tweet_process \
+        lx961104/comp90024:data_processing_v2

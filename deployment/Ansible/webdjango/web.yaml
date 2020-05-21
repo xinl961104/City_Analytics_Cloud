@@ -1,4 +1,4 @@
-- hosts: localhost
+- hosts: master
   vars_files:
     - host_vars/main.yaml
   gather_facts: false
@@ -8,5 +8,6 @@
       raw: sudo chmod 666 /var/run/docker.sock
 
   roles:
-    - role: volumes
+    - role: Tweet_Collect
+    - role: Tweet_Process
     - role: web

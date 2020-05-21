@@ -8,21 +8,20 @@
     recurse: yes
     state: directory
 
-- name: Configure compose
+- name: remove artweb service
   tags: 'web'
-  become: yes
-  template:
-    src: docker-compose.yaml.j2
-    dest: "{{ web_dir }}/docker-compose.yaml"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+  raw: sudo docker service rm artweb
+  ignore_errors: True
 
-- name: Run docker compose
+- name: Pull artweb image
+  tags: 'wen'
+  raw: sudo docker pull lx961104/comp90024:artweb_v1
+
+- name: run artweb service
   tags: 'web'
-  become: yes
-  docker_compose:
-    project_src: "{{ web_dir }}"
-    pull: yes
-    state: present
-    remove_orphans: yes
-    recreate: always
+  raw: sudo docker service create \
+        --replicas 3 \
+        --name artweb  \
+        --mount type=volume,source=web_volume,destination=/opt/web/data \
+        --publish mode=host,target=80,published=80
+        lx961104/comp90024:artweb_v1
