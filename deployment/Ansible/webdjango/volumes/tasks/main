@@ -1,7 +1,0 @@
-- name: Create a volume
-  tags: 'volume'
-  docker_volume:
-    name: "{{ data_dir }}"
-    driver_options:
-      type: btrfs
-      device: /dev/sda2
