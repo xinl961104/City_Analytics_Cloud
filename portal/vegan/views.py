@@ -26,7 +26,7 @@ def home(request):
             # CouchDB authentication
             username = 'admin'
             password = 'password'
-            url = 'http://172.26.129.40:5984/'
+            url = 'http://172.26.132.50:5984/'
             client = CouchDB(username, password, url=url, connect=True)
             db_processed = client['processed_data']
             view_processed = db_processed.get_design_document('ddoc001').get_view('mapreduce')
@@ -109,7 +109,7 @@ def income(request):
             # print(f)
             username = 'admin'
             password = 'password'
-            url = 'http://172.26.129.40:5984/'
+            url = 'http://172.26.132.50:5984/'
             client = CouchDB(username, password, url=url, connect=True)
             db_processed = client['processed_data']
             view_processed = db_processed.get_design_document('ddoc001').get_view('mapreduce')
@@ -194,7 +194,7 @@ def donation(request):
             #print(f)
             username = 'admin'
             password = 'password'
-            url = 'http://172.26.129.40:5984/'
+            url = 'http://172.26.132.50:5984/'
             client = CouchDB(username, password, url=url, connect=True)
             db_processed = client['processed_data']
             view_processed = db_processed.get_design_document('ddoc001').get_view('mapreduce')
