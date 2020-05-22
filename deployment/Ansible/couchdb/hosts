@@ -1,10 +1,11 @@
 [CouchDB]
-172.26.129.40
-172.26.131.188
-172.26.133.28
+172.26.132.50
+172.26.134.29
+172.26.130.220
+172.26.131.56
 
 [CouchDB_Manager]
-172.26.129.40
+172.26.132.50
 
 [CouchDB:vars]
 ansible_python_interpreter=/usr/bin/python3
