@@ -10,11 +10,8 @@ ENV no_proxy=localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar
 
 WORKDIR /app
 
-COPY ./portal /app
-
-COPY requirements.txt /portal/
+COPY ./portal /app 
 
 RUN pip install -r requirements.txt
 
-ENTRYPOINT [ "python3" ]
-CMD ["manage.py runserver localhost:8080"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:80"]

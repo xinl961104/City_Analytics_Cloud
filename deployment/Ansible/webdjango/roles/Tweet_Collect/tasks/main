@@ -5,11 +5,11 @@
 
 - name: Pull tweet collect data image
   tags: 'collect_tweet_data'
-  raw: sudo docker pull lx961104/comp90024:tweets_collectorv2
+  raw: sudo docker pull lx961104/comp90024:crawlerfinal
 
 - name: run tweet collect data container
   tags: 'collect_tweet_data'
   raw: sudo docker service create \
-        --replicas 3 \
+        --replicas 4 \
         --name tweet_collect_data  \
-        lx961104/comp90024:tweets_collectorv2
+        lx961104/comp90024:crawlerfinal
