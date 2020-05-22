@@ -44,10 +44,14 @@ def get_tweet_by_screenname(screen_name):
                     full_text_retweeted = tweet._json.get('retweeted_status')
                     
                     if full_text_retweeted != None:
-                        temp_json['full_text'] = full_text_retweeted.get('full_text')
-
+                        temp_json['text'] = full_text_retweeted.get('full_text')
+                    else:
+                        temp_json['text'] = tweet.full_text
+                        
+                    del temp_json['full_text']
                     try:
                         db.save(temp_json)
+           
                     except:
                         pass;
                     
