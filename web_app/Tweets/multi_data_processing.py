@@ -2,8 +2,9 @@ from db_constants import *
 from db_utils import *
 from cloudant import client, cloudant
 from cloudant.client import CouchDB
+import nltk
 from cloudant.design_document import DesignDocument
-#nltk.download('vader_lexicon')
+nltk.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import shapefile
 from shapely.geometry import Point
@@ -19,7 +20,7 @@ my_database = connect_database(USERNAME, PASSWORD,URL, DBNAME)
 my_database2 = create_database(USERNAME, PASSWORD,URL, DBNAME2)
 
 map_fun = '''function(doc) {
-            if (doc.text.includes("love")){
+            if (/( art )|(music)|(film)/.test(doc.text.toLowerCase())){
                 emit(doc.coordinates.coordinates, doc.text);
             }
         }'''
@@ -32,8 +33,9 @@ ddoc.add_view(view_id, map_fun)
 my_database.create_document(ddoc)
 view1 = my_database.get_design_document(ddoc_id).get_view(view_id)
 
+print("view retrieved start uploading")
 #open statistical areas 4 shapes and records to classify tweets location in to regions
-shp = shapefile.Reader(r'../sa4/SA4_2016_AUST')
+shp = shapefile.Reader('sa_2016/SA4_2016_AUST')
 shape_recs = shp.shapeRecords()
 mel_areas = []
 for shape_record in shape_recs:
@@ -49,8 +51,8 @@ def process_data(row):
         if Point(row['key']).within(shape(area.shape)):
             region_code = area.record[0]
             region_name = area.record[1]
-            compound_value =  sid.polarity_scores(row['value'])['compound']
-            row['tweet_id'] = row['key'][1]
+            compound_value = sid.polarity_scores(row['value'])['compound']
+            row['_id'] = row['id']
             row['compound'] = compound_value
             row['region_name'] = region_name
             row['region_code'] = region_code
@@ -64,8 +66,10 @@ if __name__ == '__main__':
         results = pool.map(process_data, rslt)
         results = [i for i in results if i is not None]
         print(time.time() - time1)
+        pool.close()
+        pool.join()
         my_database2.bulk_docs(results)
-
+print("upload finished")
 
 
 

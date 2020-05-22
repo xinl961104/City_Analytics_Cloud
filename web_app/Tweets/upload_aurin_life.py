@@ -3,7 +3,7 @@ from db_constants import *
 from db_utils import *
 
 DBNAME = "aurin_life"
-my_database = create_database(USERNAME_LOCAL, PASSWORD_LOCAL, URL_LOCAL, DBNAME)
+my_database = create_database(USERNAME, PASSWORD, URL, DBNAME)
 
 edu_aurin = pd.read_csv('../life_expectancy/life_expectancy.csv')
 (row_num, col_num) = edu_aurin.shape

@@ -9,7 +9,7 @@ from db_utils import *
 DBNAME = 'historical_data'
 #initial connection with couchdb server
 
-my_database = connect_database(USERNAME, PASSWORD,URL, DBNAME)
+my_database = create_database(USERNAME, PASSWORD,URL, DBNAME)
 
 bulk_docs = []
 count = 0

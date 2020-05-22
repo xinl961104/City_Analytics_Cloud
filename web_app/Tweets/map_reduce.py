@@ -5,6 +5,7 @@ from cloudant.design_document import DesignDocument
 from db_constants import *
 from db_utils import *
 
+print("start mapping")
 DBNAME = 'processed_data'
 
 #initial connection with couchdb server
@@ -33,6 +34,7 @@ view_id = 'mapreduce'
 my_database2 = client.get(DBNAME, remote = True)
 view1 = my_database2.get_design_document(ddoc_id).get_view(view_id)
 #with view1.custom_result(group = True) as rslt:
+print("view retrived")
 with view1.custom_result(group = True) as rslt:
     for elem in rslt:
         print(elem['key'], elem['value']['count'], elem['value']['sum']/elem['value']['count'])
