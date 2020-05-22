@@ -19,7 +19,7 @@ my_database = connect_database(USERNAME, PASSWORD,URL, DBNAME)
 my_database2 = create_database(USERNAME, PASSWORD,URL, DBNAME2)
 
 map_fun = '''function(doc) {
-            if (doc.text.includes("love")){
+            if (/( art )|(music)|(film)/.test(doc.text.toLowerCase())){
                 emit(doc.coordinates.coordinates, doc.text);
             }
         }'''
@@ -50,7 +50,8 @@ def process_data(row):
             region_code = area.record[0]
             region_name = area.record[1]
             compound_value =  sid.polarity_scores(row['value'])['compound']
-            row['tweet_id'] = row['key'][1]
+            #row['tweet_id'] = row['key'][1]
+            row['_id'] = row['id']
             row['compound'] = compound_value
             row['region_name'] = region_name
             row['region_code'] = region_code

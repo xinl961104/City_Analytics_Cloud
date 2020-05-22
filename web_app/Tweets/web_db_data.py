@@ -9,12 +9,12 @@ view_id = 'mapreduce'
 
 db_aurin_edu = 'aurin_edu'
 db_aurin_income = 'aurin_income'
-db_aurin_life = 'aurin_life'
+db_aurin_donation = 'aurin_donation'
 
 senti_score_db = connect_database(USERNAME, PASSWORD, URL, database_name)
 view = acess_view(senti_score_db, ddoc_id, view_id, True)
 
-edu_db = connect_database(USERNAME_LOCAL, PASSWORD_LOCAL, URL_LOCAL, db_aurin_edu)
+edu_db = connect_database(USERNAME, PASSWORD, URL, db_aurin_edu)
 map_fun_1 = '''function(doc) {
                 emit(doc.sa4_code16, doc.uni_other_tert_instit_tot_p);
         }'''
@@ -42,18 +42,18 @@ with view_income as view_income:
 income_table = pd.DataFrame(income_table)
 
 
-life_db = connect_database(USERNAME, PASSWORD, URL, db_aurin_life)
+donation_db = connect_database(USERNAME, PASSWORD, URL, db_aurin_donation)
 map_fun_3 = '''function(doc) {
-                emit(doc.sa4_code, doc.life_expectancy_p_2013_15);
+                emit(doc.sa4_code16, doc.donation_med_aud);
         }'''
-create_view(life_db, ddoc_id, view_id, map_fun_3)
-view_life = acess_view(life_db, ddoc_id, view_id, False)
-life_table = {'code':[], 'avg_life_exp':[]}
-with view_life as view_life:
-    for row in view_life:
-        life_table['code'].append(int(row['key']))
-        life_table['avg_life_exp'].append(int(row['value']))
-life_table = pd.DataFrame(life_table)
+create_view(donation_db, ddoc_id, view_id, map_fun_3)
+view_donation = acess_view(donation_db, ddoc_id, view_id, False)
+donation_table = {'code':[], 'med_donation':[]}
+with view_donation as view_donation:
+    for row in view_donation:
+        donation_table['code'].append(int(row['key']))
+        donation_table['med_donation'].append(int(row['value']))
+donation_table = pd.DataFrame(donation_table)
 
 
 # each row should contain a key and a value
@@ -74,15 +74,15 @@ code_name = pd.DataFrame(code_name)
 
 edu_table = edu_table.merge(code_name, left_on='code', right_on='code')
 income_table = income_table.merge(code_name, left_on='code', right_on='code')
-life_table = life_table.merge(code_name, left_on='code', right_on='code')
+donation_table = donation_table.merge(code_name, left_on='code', right_on='code')
 
 edu_twitter = edu_table.merge(senti_by_region, left_on='code', right_on = 'code')
 income_twitter = income_table.merge(senti_by_region, left_on='code', right_on = 'code')
-life_twitter = life_table.merge(senti_by_region, left_on='code', right_on = 'code')
+donation_twitter = donation_table.merge(senti_by_region, left_on='code', right_on ='code')
 
 print(edu_twitter)
 print(income_twitter)
-print(life_twitter)
+print(donation_twitter)
 
 
 ##use .iloc to query data in the table, e.g. aurin_twitter.iloc[row_index, col_index]

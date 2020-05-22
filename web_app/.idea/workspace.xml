@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9ac0bcfe-5079-4302-b2bb-e8ff50729680" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tweets/word_counter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tweets/count_vegan.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tweets/count_vegan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tweets/upload_aurin_life.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tweets/upload_aurin_donation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tweets/upload_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tweets/upload_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tweets/web_db_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tweets/web_db_data.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,7 +33,7 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Tweets" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -114,6 +118,7 @@
       <workItem from="1588604637428" duration="2141000" />
       <workItem from="1588652663662" duration="128000" />
       <workItem from="1588666350003" duration="934000" />
+      <workItem from="1589551960936" duration="17000" />
     </task>
     <servers />
   </component>
