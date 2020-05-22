@@ -23,7 +23,7 @@ def get_tweet_by_screenname(screen_name):
     api = load_api()
 
     # COUCHDB_SERVER = 'http://admin:password@115.146.92.188:5984/' #My Own Database
-    COUCHDB_SERVER = 'http://admin:password@172.26.129.40:5984/' #Group DB 
+    COUCHDB_SERVER = 'http://admin:password@172.26.132.50:5984/' #Group DB 
     couch = couchdb.Server(COUCHDB_SERVER)
     DBNAME = 'historical_data'
     try:

@@ -36,7 +36,7 @@ class StdOutListener(StreamListener):
 
     def __init__(self):
         # COUCHDB_SERVER = 'http://admin:password@115.146.92.188:5984/'
-        COUCHDB_SERVER = 'http://admin:password@172.26.129.40:5984/' #Group DB
+        COUCHDB_SERVER = 'http://admin:password@172.26.132.50:5984/' #Group DB
         couch = couchdb.Server(COUCHDB_SERVER)
         DBNAME = 'historical_data'
         try:
