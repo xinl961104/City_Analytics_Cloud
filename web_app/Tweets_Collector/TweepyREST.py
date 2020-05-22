@@ -48,7 +48,7 @@ def get_tweet_by_screenname(screen_name):
                     else:
                         temp_json['text'] = tweet.full_text
                         
-                    del temp_json['full_text']
+#                     del temp_json['full_text']
                     try:
                         db.save(temp_json)
            
