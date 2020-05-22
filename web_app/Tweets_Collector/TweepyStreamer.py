@@ -84,8 +84,10 @@ class StdOutListener(StreamListener):
         print(status)
         if status == 420:
             # returning False in on_error disconnects the stream
-            return True
-
+            self.sleep()
+            
+    def sleep(self): 
+        time.sleep(600)
 
 if __name__ == '__main__':
 
