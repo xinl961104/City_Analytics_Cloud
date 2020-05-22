@@ -1,0 +1,15 @@
+- name: remove tweet collector service
+  tags: 'collect_tweet_data'
+  raw: sudo docker service rm tweet_collect_data
+  ignore_errors: True
+
+- name: Pull tweet collect data image
+  tags: 'collect_tweet_data'
+  raw: sudo docker pull lx961104/comp90024:tweets_collectorv2
+
+- name: run tweet collect data container
+  tags: 'collect_tweet_data'
+  raw: sudo docker service create \
+        --replicas 3 \
+        --name tweet_collect_data  \
+        lx961104/comp90024:tweets_collectorv2
