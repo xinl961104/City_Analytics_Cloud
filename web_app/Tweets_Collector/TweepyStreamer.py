@@ -9,7 +9,6 @@ import couchdb
 import json
 import time
 
-
 class TwitterStreamer():
     """
     Streaming and processing live tweets
@@ -23,19 +22,21 @@ class TwitterStreamer():
                                 TwitterCredentials.CONSUMER_SECRET)
 
         auth.set_access_token(TwitterCredentials.ACCESS_TOKEN,
-                              TwitterCredentials.ACCESS_TOKEN_SECRET)
+                                  TwitterCredentials.ACCESS_TOKEN_SECRET)
 
         stream = Stream(auth, listener)
-        stream.filter(locations=location_list, stall_warnings=True)
+        stream.filter(locations =location_list, languages = ['en'])
 
 
 class StdOutListener(StreamListener):
+
     """
     Print the received tweets to StdOut and save/upload
     """
+
     def __init__(self):
         # COUCHDB_SERVER = 'http://admin:password@115.146.92.188:5984/'
-        COUCHDB_SERVER = 'http://admin:password@172.26.129.40/'  #Group DB
+        COUCHDB_SERVER = 'http://admin:password@172.26.129.40:5984/' #Group DB
         couch = couchdb.Server(COUCHDB_SERVER)
         DBNAME = 'historical_data'
         try:
@@ -53,7 +54,7 @@ class StdOutListener(StreamListener):
                 try:
                     self.db.save(tweet)
                 except:
-                    pass
+                    pass;
 
                 print(str(tweet) + '\n\n\n\n')
 
@@ -72,6 +73,7 @@ class StdOutListener(StreamListener):
 
         return True
 
+
     def on_status(self, status):
         try:
             text = status.extended_tweet["full_text"]
@@ -82,12 +84,14 @@ class StdOutListener(StreamListener):
         print(status)
         if status == 420:
             # returning False in on_error disconnects the stream
-            return True
-
+            self.sleep()
+            
+    def sleep(self): 
+        time.sleep(600)
 
 if __name__ == '__main__':
 
-    location = [113.0822098723, -43.5934083376, 153.7755692473, -11.1098013981]
+    location = [113.0822098723,-43.5934083376, 153.7755692473,-11.1098013981]
 
     twitter_streamer = TwitterStreamer()
     twitter_streamer.stream_tweets(location)
