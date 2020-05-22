@@ -1,0 +1,66 @@
+---
+- name: Mkdir haproxy
+  become: yes
+  shell: mkdir haproxy
+  when: if_folder_exists.stat.islnk is not defined
+
+- name: Create Dockerfile
+  become: yes
+  blockinfile:
+    create: yes
+    path: haproxy/Dockerfile
+    block: |
+      FROM haproxy
+      COPY haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
+
+- name: Create haproxy.cfg
+  become: yes
+  blockinfile:
+    create: yes
+    path: haproxy/haproxy.cfg
+    block: |
+      global
+      maxconn 512
+      spread-checks 5
+
+      defaults
+      mode http
+      log global
+      monitor-uri /_haproxy_health_check
+      option log-health-checks
+      option httplog
+      balance roundrobin
+      option forwardfor
+      option redispatch
+      retries 4
+      option http-server-close
+      timeout client 150000
+      timeout server 3600000
+      timeout connect 500
+
+      stats enable
+      stats uri /_haproxy_stats
+      # stats auth admin:admin # Uncomment for basic auth
+
+      frontend http-in
+      # This requires HAProxy 1.5.x
+      # bind *:$HAPROXY_PORT
+      bind *:5984
+      default_backend couchdbs
+
+      backend couchdbs
+      option httpchk GET /_up
+      http-check disable-on-404
+      server manager {{manager}}:5984 check inter 5s
+      server worker1 {{worker1}}:5984 check inter 5s
+      server worker2 {{worker2}}:5984 check inter 5s
+
+- name: Build the image
+  become: yes
+  shell: docker build -t my-haproxy .
+
+- name: Run image
+  become: yes
+  shell: docker run -d --name running-haproxy -p 4000:4000 my-haproxy
+
+
