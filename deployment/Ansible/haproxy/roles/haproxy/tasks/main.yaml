@@ -1,6 +1,4 @@
 ---
-
-
 - name: Create Dockerfile
   become: yes
   blockinfile:
@@ -45,7 +43,7 @@
       bind *:4000
       default_backend couchdbs
 
-      frontend http-in
+      frontend http
       # This requires HAProxy 1.5.x
       # bind *:$HAPROXY_PORT
       bind *:8080
@@ -60,8 +58,6 @@
       server worker3 {{worker3}}:5984 check inter 5s
 
       backend web
-      option httpchk GET /_up
-      http-check disable-on-404
       server manager {{manager}}:80 check inter 5s
       server worker1 {{worker1}}:80 check inter 5s
       server worker2 {{worker2}}:80 check inter 5s
