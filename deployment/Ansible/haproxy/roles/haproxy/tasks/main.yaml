@@ -1,0 +1,82 @@
+---
+
+
+- name: Create Dockerfile
+  become: yes
+  blockinfile:
+    create: yes
+    path: haproxy/Dockerfile
+    block: |
+      FROM haproxy
+      COPY haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
+
+- name: Create haproxy.cfg
+  become: yes
+  blockinfile:
+    create: yes
+    path: haproxy/haproxy.cfg
+    block: |
+      global
+      maxconn 512
+      spread-checks 5
+
+      defaults
+      mode http
+      log global
+      monitor-uri /_haproxy_health_check
+      option log-health-checks
+      option httplog
+      balance roundrobin
+      option forwardfor
+      option redispatch
+      retries 4
+      option http-server-close
+      timeout client 150000
+      timeout server 3600000
+      timeout connect 500
+
+      stats enable
+      stats uri /_haproxy_stats
+      # stats auth admin:admin # Uncomment for basic auth
+
+      frontend http-in
+      # This requires HAProxy 1.5.x
+      # bind *:$HAPROXY_PORT
+      bind *:4000
+      default_backend couchdbs
+
+      frontend http-in
+      # This requires HAProxy 1.5.x
+      # bind *:$HAPROXY_PORT
+      bind *:8080
+      default_backend web
+
+      backend couchdbs
+      option httpchk GET /_up
+      http-check disable-on-404
+      server manager {{manager}}:5984 check inter 5s
+      server worker1 {{worker1}}:5984 check inter 5s
+      server worker2 {{worker2}}:5984 check inter 5s
+      server worker3 {{worker3}}:5984 check inter 5s
+
+      backend web
+      option httpchk GET /_up
+      http-check disable-on-404
+      server manager {{manager}}:80 check inter 5s
+      server worker1 {{worker1}}:80 check inter 5s
+      server worker2 {{worker2}}:80 check inter 5s
+      server worker3 {{worker3}}:80 check inter 5s
+
+- name: rm container
+  become: yes
+  shell: docker rm -f running-haproxy
+
+- name: Build the image
+  become: yes
+  shell: docker build -t my-haproxy haproxy
+
+- name: Run image
+  become: yes
+  shell: docker run -d --name running-haproxy -p 4000:4000 -p 8080:8080 my-haproxy
+
+
