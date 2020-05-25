@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = [
     url(r'^education/$', views.home, name='home'),
+    url(r'^home/$', views.firstpage, name='firstpage'),
     url(r'^income/$', views.income, name='income'),
     url(r'^donation/$', views.donation, name='donation'),
     url(r'^api/data/$', get_data, name='api-data'),

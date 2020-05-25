@@ -7,6 +7,10 @@ from django.shortcuts import render, redirect
 from cloudant import CouchDB
 
 
+def firstpage(request):
+    return render(request, 'vegan/homepage.html')
+
+
 def home(request):
     if request.method == 'POST':
         featureform = featureSelectionForm(request.POST)
@@ -74,7 +78,7 @@ def home(request):
                            edu_twitter.iloc[6, 4], edu_twitter.iloc[7, 4], edu_twitter.iloc[8, 4]]
             print(tweet_count)
 
-            #print(zip(recieved, region_label, tertiary_list, senti_list, tweet_count))
+            # print(zip(recieved, region_label, tertiary_list, senti_list, tweet_count))
             region_label[:] = [i for i, j in zip(region_label, recieved) if j]
             tertiary_list[:] = [i for i, j in zip(tertiary_list, recieved) if j]
             senti_list[:] = [i for i, j in zip(senti_list, recieved) if j]
@@ -191,7 +195,7 @@ def donation(request):
                         MelbourneOuterEast, MelbourneSouthEast, MelbourneWest, MorningtonPeninsula]
 
             # CouchDB authentication
-            #print(f)
+            # print(f)
             username = 'admin'
             password = 'password'
             url = 'http://172.26.132.50:5984/'
