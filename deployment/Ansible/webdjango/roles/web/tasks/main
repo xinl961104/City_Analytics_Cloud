@@ -24,4 +24,4 @@
         --name artweb  \
         --mount type=volume,source=web_volume,destination=/opt/web/data \
         --publish mode=host,target=80,published=80
-        lx961104/comp90024:artweb
+        lx961104/comp90024:artweb2
