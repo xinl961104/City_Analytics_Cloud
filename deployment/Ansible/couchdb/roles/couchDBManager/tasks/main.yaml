@@ -14,10 +14,47 @@
          -e COUCHDB_PASSWORD=password  \
          -d couchdb
 
+- name: mkdir couchDB_cluster
+  become: yes
+  shell: mkdir couchDB_cluster
 
+- name: Set up cluster
+  become: yes
+  blockinfile:
+    create: yes
+    path: couchDB_cluster/couch.sh
+    block: |
+      export declare -a nodes=(172.17.0.4 172.17.0.3 172.17.0.2)
+      export masternode=`echo ${nodes} | cut -f1 -d' '`
+      export declare -a othernodes=`echo ${nodes[@]} | sed s/${masternode}//`
+      export size=${#nodes[@]}
+      export user=admin
+      export pass=password
+      for node in ${othernodes} 
+      do
+      curl -XPOST "http://${user}:${pass}@${masternode}:5984/_cluster_setup" \
+      --header "Content-Type: application/json"\
+      --data "{\"action\": \"enable_cluster\", \"bind_address\":\"0.0.0.0\",\
+             \"username\": \"${user}\", \"password\":\"${pass}\", \"port\": \"5984\",\
+             \"remote_node\": \"${node}\", \"node_count\": \"$(echo ${nodes[@]} | wc -w)\",\
+             \"remote_current_user\":\"${user}\", \"remote_current_password\":\"${pass}\"}"
+      done
+      for node in ${othernodes}
+      do
+      curl -XPOST "http://${user}:${pass}@${masternode}:5984/_cluster_setup"\
+      --header "Content-Type: application/json"\
+      --data "{\"action\": \"add_node\", \"host\":\"${node}\",\
+             \"port\": \"5984\", \"username\": \"${user}\", \"password\":\"${pass}\"}"
+      done
+      curl -XPOST "http://${user}:${pass}@${masternode}:5984/_cluster_setup"\
+       --header "Content-Type: application/json" --data "{\"action\": \"finish_cluster\"}"
 
+- name: change permission
+  become: yes
+  shell: chmod +wx couchDB_cluster/couch.sh
 
-
-
+- name: Run couch shell
+  become: yes
+  shell: couchDB_cluster/couch.sh
 
 

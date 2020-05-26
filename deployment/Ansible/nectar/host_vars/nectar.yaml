@@ -71,6 +71,18 @@ security_groups:
     port_range_min: 7946  
     port_range_max: 7946  
     remote_ip_prefix: 0.0.0.0/0
+  - name: haproxy1
+    description: ""
+    protocol: udp
+    port_range_min: 4000  
+    port_range_max: 4000  
+    remote_ip_prefix: 0.0.0.0/0
+  - name: haproxy2
+    description: ""
+    protocol: udp
+    port_range_min: 8000  
+    port_range_max: 8000  
+    remote_ip_prefix: 0.0.0.0/0
 
 # Instance
 instances:
