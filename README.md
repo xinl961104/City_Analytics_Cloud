@@ -1,6 +1,6 @@
 # Art Melbourne 
 
-This is the repository of assignment 2 for the course COMP90024
+This is the repository of assignment 2 for the Course COMP90024 - Cluster and Cloud Computing
 
 Team 30:
 Xingjian Zhang – Tweets Analysis, Views of CouchDB<br/>
@@ -8,16 +8,26 @@ Xin Li – Automatic Deployment, Django Web<br/>
 Yuxian Wang – Automatic Deployment<br/>
 Yue Bao – Data Harvesting, Error Handling<br/>
 
-User Manual:
 
 Web Interface Link: http://172.26.132.50:8080/<br/>
 CouchDB cluster Link: http://172.26.132.50:4000/_utils/#<br/>
 couchdb username: admin<br/>
 couchdb password: password<br/>
 
-How to automatic deploy with Anisble:
+
+High Level Architecture Diagram:
+
+
+
+Service Relationshhip Diagram:
+
+
+
+How to automatic deploy with Anisble: <br/>
 The Ansible playbooks are put in the directory called deployment/Ansible<br/>
 Password credentails are detailed in the openstack-Password.txt <br/>
+
+
 Steps:<br/>
 1. Run the nectar playbook with command: ./run-nectar.sh
 2. Replace the VM's IP with the new created VM ips in the file docker/hosts 
