@@ -18,10 +18,11 @@ couchdb password: password
 How to automatic deploy with Anisble:
 
 
+
+
+
 Ansible Playbook Structure and Explaination
-In order to define each function of this application, we have decided to set five playbooks with different deployment services. Each function of the playbook has been described in the following passage:
-Nectar
-The purpose of this playbook is to automatically deploy the customized instances on Melbourne Research Cloud.
+
  - The main.yaml file in the host_vars folder sets the variables for creating instances including volume, security groups, instances, the Ubuntu image for instances, the key used to create instances and the flavor.
  - To customize the instances, we need to install openstacksdk, set up the image, create the instances, add security groups and volume onto the instances. All of these tasks have been put in the roles folder.
  - The nectar.yaml file defines the tasks that would be executed on which host and the variables that need to be used.
@@ -29,8 +30,6 @@ The purpose of this playbook is to automatically deploy the customized instances
 
 
 Docker
-After all the instances have been successfully created, the binding ip addresses would be given and what we need to do is to save these addresses into hosts file for future call during deployment. The next step for the deployment is to install docker on instances.
-
 - Same as main.yaml in nectar, the docker.yaml in host_vars folder stores the path of device and mount point for volume as variables.
 - The tasks for docker contain setting proxy, installing independencies and docker and creating volume directory. More importantly, manager node and worker nodes should also be defined in this task
 - More importantly, a manager node and worker nodes should also be defined as well. The two files, swarm manager and swarmworks, aim to initial the manager node, add the given token to hosts and join the worker nodes to it, so that the swarm mode could be created successfully.

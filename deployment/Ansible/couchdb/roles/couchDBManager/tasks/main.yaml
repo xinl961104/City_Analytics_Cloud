@@ -24,7 +24,7 @@
     create: yes
     path: couchDB_cluster/couch.sh
     block: |
-      export declare -a nodes=(172.17.0.4 172.17.0.3 172.17.0.2)
+      export declare -a nodes=({{manager}} {{worker1}} {{worker2}} {{worker3}})
       export masternode=`echo ${nodes} | cut -f1 -d' '`
       export declare -a othernodes=`echo ${nodes[@]} | sed s/${masternode}//`
       export size=${#nodes[@]}
