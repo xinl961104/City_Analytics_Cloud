@@ -16,10 +16,10 @@ couchdb password: password<br/>
 
 
 High Level Architecture Diagram:
-![ServiceRelationshipDiagram](https://github.com/xinl961104/City_Analytics_Cloud/tree/master/pictures/architecture_diagram.png)
+![ServiceRelationshipDiagram](https://github.com/xinl961104/City_Analytics_Cloud/blob/master/pictures/architecture_diagram.png)
 
 Service Relationshhip Diagram:
-![ServiceRelationshipDiagram](https://github.com/xinl961104/City_Analytics_Cloud/tree/master/pictures/service_relationships.png.png)
+![ServiceRelationshipDiagram](https://github.com/xinl961104/City_Analytics_Cloud/blob/master/pictures/service_relationships.png.png)
 
 
 How to automatic deploy with Anisble: <br/>
