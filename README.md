@@ -16,17 +16,15 @@ couchdb password: password<br/>
 
 
 High Level Architecture Diagram:
-
-
+![ServiceRelationshipDiagram](https://github.com/xinl961104/City_Analytics_Cloud/blob/readme/pictures/architecture_diagram.png)
 
 Service Relationshhip Diagram:
-
+![ServiceRelationshipDiagram](https://github.com/xinl961104/City_Analytics_Cloud/blob/readme/pictures/service_relationships.png)
 
 
 How to automatic deploy with Anisble: <br/>
 The Ansible playbooks are put in the directory called deployment/Ansible<br/>
 Password credentails are detailed in the openstack-Password.txt <br/>
-
 
 Steps:<br/>
 1. Run the nectar playbook with command: ./run-nectar.sh
